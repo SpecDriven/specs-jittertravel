@@ -14,6 +14,10 @@ This part covers how hotel bookings appear as lodging entries on the calendar an
 
 _Source: `src/test/java/dev/ted/jittertravel/application/HotelCalendarProjectorTest.java`, `src/main/java/dev/ted/jittertravel/application/HotelCalendarProjector.java`._
 
+[test: hotelBookedAddsLodgingEntryToCalendarWithTentativeKind : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelCalendarProjectorTest.java#L23 ]
+[test: calendarEntryCarriesOwnerEditPath : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelCalendarProjectorTest.java#L76 ]
+[test: calendarEntryCarriesOwnerCancelPath : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelCalendarProjectorTest.java#L90 ]
+
 ## S2: A changed hotel replaces its calendar entry instead of adding one @v1 [proposed]
 
 - Given: a hotel booking that is later changed to "Seaside Resort" in Miami, FL, with new dates
@@ -24,6 +28,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/HotelCalendarProjectorT
 
 _Source: `src/test/java/dev/ted/jittertravel/application/HotelCalendarProjectorTest.java`, `src/main/java/dev/ted/jittertravel/application/HotelCalendarProjector.java`._
 
+[test: hotelChangedReplacesCalendarEntryUnderSameId : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelCalendarProjectorTest.java#L49 ]
+
 ## S3: The hotel edit form is filled from the latest booking details @v1 [proposed]
 
 - Given: a hotel booking with a name, an address, check-in and check-out times, a booking intent, a maps URL and a cancel-by deadline
@@ -33,6 +39,9 @@ _Source: `src/test/java/dev/ted/jittertravel/application/HotelCalendarProjectorT
 
 _Source: `src/test/java/dev/ted/jittertravel/application/HotelDetailsViewProjectorTest.java`, `src/main/java/dev/ted/jittertravel/application/HotelDetailsViewProjector.java`, `src/main/java/dev/ted/jittertravel/application/HotelDetailsView.java`._
 
+[test: hotelBookedProducesDetailViewKeyedByBookingId : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelDetailsViewProjectorTest.java#L31 ]
+[test: findByIdReturnsEmptyWhenNoBooking : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelDetailsViewProjectorTest.java#L99 ]
+
 ## S4: A hotel change with no deadline clears the earlier cancel-by deadline @v1 [proposed]
 
 - Given: a hotel booking that had a cancel-by deadline
@@ -41,6 +50,9 @@ _Source: `src/test/java/dev/ted/jittertravel/application/HotelDetailsViewProject
 - and: the cancel-by deadline is empty
 
 _Source: `src/test/java/dev/ted/jittertravel/application/HotelDetailsViewProjectorTest.java`, `src/main/java/dev/ted/jittertravel/application/HotelHandler.java`._
+
+[test: hotelChangedOverwritesPreviousDetails : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelDetailsViewProjectorTest.java#L64 ]
+[test: clearingTheDeadlineOnAChangeLeavesItNull : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelHandlerTest.java#L116 ]
 
 ## S5: Hotel times are read in the hotel's own time zone @v1 [proposed]
 
@@ -52,6 +64,13 @@ _Source: `src/test/java/dev/ted/jittertravel/application/HotelDetailsViewProject
 
 _Source: `src/main/java/dev/ted/jittertravel/application/HotelHandler.java`, `src/main/java/dev/ted/jittertravel/application/HotelBooking.java`._
 
+[test: hotelZoneIsDerivedFromTheAddressWhenNoZoneIsPicked : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelHandlerTest.java#L39 ]
+[test: explicitZonePickWinsOverTheAddress : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelHandlerTest.java#L59 ]
+[test: unresolvableAddressWithNoPickIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelHandlerTest.java#L67 ]
+[test: unresolvableAddressIsAcceptedOnceAZoneIsPicked : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelHandlerTest.java#L73 ]
+[test: theCancelByDeadlineIsReadInTheHotelsZoneToo : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelHandlerTest.java#L83 ]
+[test: changingAHotelReadsTheZoneAndTheDeadlineExactlyAsBookingDoes : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HotelHandlerTest.java#L104 ]
+
 ## S6: Home city names match ignoring case and surrounding whitespace @v1 [proposed]
 
 - Given: the home cities "San Francisco", "San Jose" and "Oakland"
@@ -60,6 +79,10 @@ _Source: `src/main/java/dev/ted/jittertravel/application/HotelHandler.java`, `sr
 - and: configured names are trimmed, and blank entries are ignored
 
 _Source: `src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java`, `src/main/java/dev/ted/jittertravel/application/HomeCities.java`._
+
+[test: includesConfiguredCityIgnoringCase : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L15 ]
+[test: doesNotIncludeCityThatIsNotHome : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L22 ]
+[test: configuredNamesAreTrimmed : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L29 ]
 
 ## S7: Any two home cities count as the same location @v1 [proposed]
 
@@ -71,6 +94,11 @@ _Source: `src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java`, `
 
 _Source: `src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java`, `src/main/java/dev/ted/jittertravel/application/HomeCities.java`._
 
+[test: twoDifferentHomeCitiesAreTheSameLocation : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L38 ]
+[test: homeCityAndNonHomeCityAreDifferentLocations : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L45 ]
+[test: sameLocationIgnoresSurroundingWhitespace : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L64 ]
+[test: sameNameIsSameLocationIgnoringCase : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L52 ]
+
 ## S8: The primary home city is the first non-blank city configured, with its original casing @v1 [proposed]
 
 - Given: the home cities "  ", " San Jose " and "Oakland"
@@ -80,6 +108,12 @@ _Source: `src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java`, `
 
 _Source: `src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java`, `src/main/java/dev/ted/jittertravel/application/HomeCities.java`._
 
+[test: primaryCitySkipsBlankConfiguredEntries : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L78 ]
+[test: emptyHomeCitiesHaveNoPrimaryCity : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L87 ]
+[test: emptyHomeCitiesIncludesNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L96 ]
+[test: emptyHomeCitiesComparesNamesOnly : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L105 ]
+[test: primaryCityIsTheFirstConfiguredOneAsItWasConfigured : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java#L71 ]
+
 ## S9: A recorded rebooking counts the legs it added, moved and dropped @v1 [proposed]
 
 - Given: one rebooking of itinerary HE80PP that books one leg, moves one leg and drops two legs as "Rebooked", all within the same command
@@ -87,6 +121,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/HomeCitiesTest.java`, `
 - Then: the outcome is REBOOKING with 1 added, 1 moved and 2 dropped
 
 _Source: `src/test/java/dev/ted/jittertravel/application/ItineraryChangeOutcomesProjectorTest.java`, `src/main/java/dev/ted/jittertravel/application/ItineraryChangeOutcomesProjector.java`._
+
+[test: aRebookingCountsTheLegsItsOwnAppendAddedMovedAndDropped : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryChangeOutcomesProjectorTest.java#L35 ]
 
 ## S10: Only the change's own legs count, and a cancellation made by hand is not a drop @v1 [proposed]
 
@@ -96,6 +132,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/ItineraryChangeOutcomes
 
 _Source: `src/test/java/dev/ted/jittertravel/application/ItineraryChangeOutcomesProjectorTest.java`, `src/main/java/dev/ted/jittertravel/application/ItineraryChangeOutcomesProjector.java`._
 
+[test: anotherCommandsLegsAndAHandCancellationAreNotCounted : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryChangeOutcomesProjectorTest.java#L56 ]
+
 ## S11: Only an itinerary's latest change is kept @v1 [proposed]
 
 - Given: a schedule change of HE80PP, followed by a rebooking that drops one leg
@@ -104,6 +142,9 @@ _Source: `src/test/java/dev/ted/jittertravel/application/ItineraryChangeOutcomes
 - and: an itinerary that was never changed has no outcome
 
 _Source: `src/test/java/dev/ted/jittertravel/application/ItineraryChangeOutcomesProjectorTest.java`, `src/main/java/dev/ted/jittertravel/application/ItineraryChangeOutcomesProjector.java`._
+
+[test: theLatestChangeReplacesTheOneBefore : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryChangeOutcomesProjectorTest.java#L72 ]
+[test: anItineraryNeverChangedHasNoOutcome : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryChangeOutcomesProjectorTest.java#L87 ]
 
 ## S12: An itinerary change is news to family only when a journey's outer ends materially change @v1 [proposed]
 
@@ -115,3 +156,10 @@ _Source: `src/test/java/dev/ted/jittertravel/application/ItineraryChangeOutcomes
 - and: changes to a connection's airports or times, or a departure moving 40 minutes, are not news
 
 _Source: `src/main/java/dev/ted/jittertravel/application/ItineraryChangeNews.java`, `src/main/java/dev/ted/jittertravel/application/HomeCities.java`._
+
+[test: aReturnThatNowStartsInAnotherCityIsNews : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryChangeNewsTest.java#L43 ]
+[test: returningToAnotherHomeAirportIsNotNews : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryChangeNewsTest.java#L65 ]
+[test: aFirstDepartureMovingMoreThanTwoHoursIsNews : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryChangeNewsTest.java#L73 ]
+[test: aLastArrivalMovingMoreThanTwoHoursIsNews : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryChangeNewsTest.java#L90 ]
+[test: aJourneyNothingBeforeOverlapsIsNews : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryChangeNewsTest.java#L120 ]
+[test: aJourneyNothingAfterOverlapsIsNews : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryChangeNewsTest.java#L131 ]

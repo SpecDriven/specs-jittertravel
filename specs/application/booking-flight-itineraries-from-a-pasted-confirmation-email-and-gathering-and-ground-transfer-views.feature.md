@@ -15,6 +15,10 @@ A whole flight itinerary is booked from a pasted airline confirmation email. Pre
 
 _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingIntegrationTest.java`, `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java`, `src/main/java/dev/ted/jittertravel/application/FlightItineraryBooking.java`._
 
+[test: aCleanPasteBooksEveryLegAndTheItineraryInOneCommand : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L63 ]
+[test: aCleanPasteLandsAsBothLegsAndTheItineraryUnderOneCommand : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingIntegrationTest.java#L64 ]
+[test: theBookedLegsAppearOnTheFlightsListThroughTheRealProjector : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingIntegrationTest.java#L89 ]
+
 ## S2: Leg times are zoned by the airport where they happen @v1 [proposed]
 
 - Given: a paste whose second leg arrives at YOW at 05:16 PM on Oct 18, 2026
@@ -22,6 +26,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingI
 - Then: that leg's arrival is recorded as 17:16 in America/Toronto, the zone the curated airport table gives for YOW
 
 _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java`._
+
+[test: aCleanPasteBooksEveryLegAndTheItineraryInOneCommand : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L63 ]
 
 ## S3: An airport the table does not know waits for a zone and books nothing @v1 [proposed]
 
@@ -32,6 +38,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingT
 
 _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java`, `src/main/java/dev/ted/jittertravel/application/FlightItineraryBooking.java`._
 
+[test: anAirportTheTableDoesNotKnowWaitsForAZoneAndBooksNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L94 ]
+
 ## S4: A picked zone settles an unknown airport @v1 [proposed]
 
 - Given: a paste with the unknown airport YQB
@@ -40,6 +48,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingT
 - and: the leg arriving at YQB has its arrival in America/Toronto
 
 _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java`._
+
+[test: aPickedZoneSettlesAnUnknownAirport : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L111 ]
 
 ## S5: A leg that overlaps a booked flight refuses the whole paste and writes nothing @v1 [proposed]
 
@@ -51,6 +61,9 @@ _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingT
 
 _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java`, `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingIntegrationTest.java`, `src/main/java/dev/ted/jittertravel/application/FlightItineraryBooking.java`._
 
+[test: thePreviewShowsTheRefusalBookingWouldMeetAndWritesNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L126 ]
+[test: aRefusedPasteWritesNoCommandAndNoEvents : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingIntegrationTest.java#L102 ]
+
 ## S6: A paste that cannot be read books nothing @v1 [proposed]
 
 - Given: pasted text that is not an itinerary, such as "Thanks for choosing United!"
@@ -59,6 +72,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingT
 - and: no event is recorded
 
 _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java`._
+
+[test: aPasteThatCannotBeReadBooksNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L149 ]
 
 ## S7: Submitting the same form twice books it once and reports the second as already booked @v1 [proposed]
 
@@ -70,6 +85,11 @@ _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingT
 
 _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java`, `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingIntegrationTest.java`, `src/main/java/dev/ted/jittertravel/application/FlightItineraryBooking.java`._
 
+[test: anItineraryIdAlreadyBookedIsReportedAsSuchAndWritesNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L181 ]
+[test: submittingTheSameFormTwiceBooksItOnceAndSaysWhyTheSecondWasNotBooked : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingIntegrationTest.java#L124 ]
+[test: resubmittingAStaleFormAfterTheFlightsWereCancelledIsAlreadyBookedNotAnError : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingIntegrationTest.java#L148 ]
+[test: anotherItinerarysBookingDoesNotMakeThisOneAlreadyBooked : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L201 ]
+
 ## S8: A confirmation code already on the books is refused rather than applied as a change @v1 [proposed]
 
 - Given: a live itinerary with code MD7LKB is booked
@@ -80,6 +100,9 @@ _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingT
 
 _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java`, `src/main/java/dev/ted/jittertravel/application/FlightItineraryBooking.java`._
 
+[test: aCodeAlreadyBookedIsRefusedWithWhichItineraryItIsAndWritesNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L217 ]
+[test: aCodeAlreadyBookedIsRefusedBeforeAnyZoneIsAskedFor : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L237 ]
+
 ## S9: A code whose itinerary was cancelled is refused with the reason @v1 [proposed]
 
 - Given: the itinerary with code MD7LKB was booked and then cancelled
@@ -89,6 +112,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingT
 
 _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java`, `src/main/java/dev/ted/jittertravel/application/FlightItineraryBooking.java`._
 
+[test: aCodeWhoseEveryItineraryWasCancelledIsRefusedWithTheReason : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L251 ]
+
 ## S10: The stored command carries none of the email's private lines @v1 [proposed]
 
 - Given: a paste that contains an eTicket number, a frequent flyer number, traveler details and seats
@@ -97,6 +122,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingT
 - and: it contains none of the eTicket number, the frequent flyer number, the traveler name or the seat
 
 _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java`._
+
+[test: theStoredCommandCarriesNoneOfThePrivateLinesOfTheEmail : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingTest.java#L166 ]
 
 ## S11: Cancelling an itinerary cancels every leg and the itinerary under one command, and only once @v1 [proposed]
 
@@ -108,6 +135,9 @@ _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingT
 
 _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingIntegrationTest.java`._
 
+[test: cancellingTheItineraryWritesEveryLegsCancellationAndItsOwnUnderOneCommand : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingIntegrationTest.java#L169 ]
+[test: cancellingAnItineraryTwiceIsRefusedTheSecondTimeAndWritesNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingIntegrationTest.java#L196 ]
+
 ## S12: The gathering details view follows the latest planned or changed snapshot @v1 [proposed]
 
 - Given: a gathering is planned with a title, venue, location, start and end, speaking flag and info URL
@@ -117,3 +147,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/FlightItineraryBookingI
 - and: an unknown gathering id finds nothing
 
 _Source: `src/test/java/dev/ted/jittertravel/application/GatheringDetailsViewProjectorTest.java`, `src/main/java/dev/ted/jittertravel/application/GatheringDetailsViewProjector.java`._
+
+[test: gatheringPlannedEventCreatesDetailsView : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/GatheringDetailsViewProjectorTest.java#L43 ]
+[test: gatheringChangedOverwritesEveryFieldOfThePlannedView : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/GatheringDetailsViewProjectorTest.java#L73 ]
+[test: changingOneGatheringLeavesOthersUntouched : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/GatheringDetailsViewProjectorTest.java#L102 ]
+[test: unknownGatheringIdIsEmpty : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/GatheringDetailsViewProjectorTest.java#L33 ]

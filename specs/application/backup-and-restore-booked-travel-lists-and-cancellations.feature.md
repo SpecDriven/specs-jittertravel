@@ -14,6 +14,8 @@ Part 1 of the application layer covers four things. The first is the event-orien
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BackupServiceReadOnlyTest.java`, `src/main/java/dev/ted/jittertravel/application/BackupService.java`._
 
+[test: restoreInReadOnlyModeRefusesAndWritesNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BackupServiceReadOnlyTest.java#L19 ]
+
 ## S2: Backup metadata records the source and the creation instant @v1 [proposed]
 
 - Given: a backup is taken at 2026-08-11T14:30:00Z on the "production" instance
@@ -22,6 +24,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BackupServiceReadOnlyTe
 - and: the metadata `createdAt` is the instant 2026-08-11T14:30:00Z
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BackupServiceTest.java`, `src/main/java/dev/ted/jittertravel/application/BackupService.java`._
+
+[test: metadataRecordsTheSourceAndTheCreatedAtInstant : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BackupServiceTest.java#L39 ]
 
 ## S3: Backup filename and createdAt are normalised to UTC @v1 [proposed]
 
@@ -33,6 +37,9 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BackupServiceTest.java`
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BackupServiceTest.java`, `src/main/java/dev/ted/jittertravel/application/BackupService.java`._
 
+[test: createdAtAndFilenameAreNormalisedToUtc : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BackupServiceTest.java#L50 ]
+[test: filenameCarriesTheSourceAndTheUtcTimestamp : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BackupServiceTest.java#L62 ]
+
 ## S4: Backups are written as version 3, and each event keeps its schema-version stamp @v1 [proposed]
 
 - Given: the event log holds one HotelBooked event stamped with schema version 2
@@ -41,6 +48,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BackupServiceTest.java`
 - and: the event's `schemaVersion` is 2
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BackupServiceTest.java`, `src/main/java/dev/ted/jittertravel/application/BackupService.java`._
+
+[test: writesVersion3AndCarriesEachEventSchemaVersionStamp : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BackupServiceTest.java#L71 ]
 
 ## S5: Restore checks the whole file and reports every problem before writing anything @v1 [proposed]
 
@@ -53,6 +62,9 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BackupServiceTest.java`
 
 _Source: `src/main/java/dev/ted/jittertravel/application/BackupService.java`._
 
+[test: eventLogAndEveryCommandStatusRoundTripVerbatim : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BackupRestoreRoundTripTest.java#L46 ]
+[test: aPreStampVersion2BackupIsRefusedWritingNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BackupRestoreRoundTripTest.java#L100 ]
+
 ## S6: The backup source label depends on the hosting-environment marker @v1 [proposed]
 
 - Given: the environment marker is "production"
@@ -62,6 +74,10 @@ _Source: `src/main/java/dev/ted/jittertravel/application/BackupService.java`._
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BackupSourceTest.java`, `src/main/java/dev/ted/jittertravel/application/BackupSource.java`._
 
+[test: aPresentEnvironmentMarkerMeansProduction : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BackupSourceTest.java#L15 ]
+[test: anAbsentMarkerMeansLocal : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BackupSourceTest.java#L21 ]
+[test: aBlankMarkerMeansLocal : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BackupSourceTest.java#L27 ]
+
 ## S7: A flight change overwrites the booked flight's row @v1 [proposed]
 
 - Given: flight UA59 on United from SFO to FRA is booked
@@ -70,6 +86,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BackupSourceTest.java`,
 - and: that row shows airline Lufthansa, flight number LH441 and route "SFO→MUC"
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BookedFlightsProjectorFlightChangedTest.java`, `src/main/java/dev/ted/jittertravel/application/BookedFlightsProjector.java`, `src/main/java/dev/ted/jittertravel/application/BookedFlightView.java`._
+
+[test: flightChangedOverwritesPreviousListEntry : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedFlightsProjectorFlightChangedTest.java#L24 ]
 
 ## S8: Flight history lists the booking first, then each change in order @v1 [proposed]
 
@@ -82,6 +100,9 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BookedFlightsProjectorF
 - and: a flight that was only booked has no changes and one history entry starting "Booked on "
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BookedFlightsProjectorFlightChangedTest.java`, `src/main/java/dev/ted/jittertravel/application/BookedFlightsProjector.java`, `src/main/java/dev/ted/jittertravel/application/BookedFlightView.java`._
+
+[test: historyIncludesBookingFirstThenEachChangeInChronologicalOrder : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedFlightsProjectorFlightChangedTest.java#L50 ]
+[test: flightBookedAloneHasNoChanges : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedFlightsProjectorFlightChangedTest.java#L80 ]
 
 ## S9: Booked itineraries are found while live, and their flights stay linked to them @v1 [proposed]
 
@@ -96,6 +117,13 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BookedFlightsProjectorF
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjectorTest.java`, `src/main/java/dev/ted/jittertravel/application/BookedItinerariesProjector.java`, `src/main/java/dev/ted/jittertravel/application/BookedItineraryView.java`._
 
+[test: aBookedItineraryIsFoundWithItsCodeAndItsFlights : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjectorTest.java#L28 ]
+[test: anItineraryThatWasNeverBookedIsNotFound : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjectorTest.java#L39 ]
+[test: aCancelledItineraryIsNoLongerLive : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjectorTest.java#L46 ]
+[test: cancellingAnotherItineraryLeavesThisOneLive : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjectorTest.java#L57 ]
+[test: aFlightIsFoundByTheItineraryItWasBookedWithEvenOnceThatItineraryIsCancelled : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjectorTest.java#L69 ]
+[test: aFlightEnteredByHandBelongsToNoItinerary : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjectorTest.java#L81 ]
+
 ## S10: A schedule change or a rebooking replaces the itinerary's flights @v1 [proposed]
 
 - Given: an itinerary is booked with an outbound and a return flight
@@ -104,6 +132,9 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjec
 - and: the added flight is found as belonging to the itinerary's confirmation code
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjectorTest.java`, `src/main/java/dev/ted/jittertravel/application/BookedItinerariesProjector.java`._
+
+[test: aScheduleChangeReplacesTheMembershipAndEveryFlightStillBelongsToTheTrip : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjectorTest.java#L91 ]
+[test: aRebookingReplacesTheMembershipAndEveryFlightStillBelongsToTheTrip : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjectorTest.java#L110 ]
 
 ## S11: The ?cancelled parameter shows or hides cancelled rows @v1 [proposed]
 
@@ -116,6 +147,11 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BookedItinerariesProjec
 
 _Source: `src/test/java/dev/ted/jittertravel/application/CancelledViewTest.java`, `src/main/java/dev/ted/jittertravel/application/CancelledView.java`, `src/main/java/dev/ted/jittertravel/application/BookedFlightsProjector.java`, `src/main/java/dev/ted/jittertravel/application/BookedHotelsProjector.java`._
 
+[test: aRecognizedValueResolvesWhateverItsCase : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CancelledViewTest.java#L14 ]
+[test: anAbsentOrUnrecognizedValueHidesCanceledRows : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CancelledViewTest.java#L22 ]
+[test: hideLeavesCanceledStaysOutWhileShowKeepsThemAndTheCountSeesThemEitherWay : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookedHotelsProjectorTest.java#L156 ]
+[test: theBookedFlightsListHidesTheCancelledFlightByDefault : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/FlightCancellationPropagationTest.java#L46 ]
+
 ## S12: Itinerary evaluations default a missing confirmation code to empty and are not bookable without a command @v1 [proposed]
 
 - Given: an itinerary evaluation is made with no confirmation code
@@ -125,3 +161,7 @@ _Source: `src/test/java/dev/ted/jittertravel/application/CancelledViewTest.java`
 - and: an evaluation that could not be parsed, for example with the message "No flights found", is not bookable
 
 _Source: `src/test/java/dev/ted/jittertravel/application/ItineraryEvaluationTest.java`._
+
+[test: aMissingConfirmationCodeIsTheEmptyStringNeverNull : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryEvaluationTest.java#L12 ]
+[test: aGivenConfirmationCodeIsKept : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryEvaluationTest.java#L20 ]
+[test: anEvaluationWithNoCommandIsNotBookable : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ItineraryEvaluationTest.java#L28 ]

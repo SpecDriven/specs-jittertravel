@@ -14,6 +14,8 @@ A one-time migration rewrites stored events into their current payload shape and
 
 _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationReadOnlyTest.java`, `src/main/java/dev/ted/jittertravel/application/LegacyEventMigration.java`._
 
+[test: migrateInReadOnlyModeRefusesAndWritesNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationReadOnlyTest.java#L21 ]
+
 ## S2: A legacy hotel event is rewritten to country codes and stamped with the current version while keeping its identity @v1 [proposed]
 
 - Given: a stored HotelBooked event at schema version 2 whose address country is "UK"
@@ -25,6 +27,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationRea
 
 _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java`, `src/main/java/dev/ted/jittertravel/application/LegacyEventMigration.java`._
 
+[test: migratesAStoredHotelToCountryCodesStampsCurrentVersionAndKeepsIdentity : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java#L111 ]
+
 ## S3: Running the migration a second time rewrites nothing @v1 [proposed]
 
 - Given: the migration has already run over a legacy hotel event
@@ -34,6 +38,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTes
 
 _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java`, `src/main/java/dev/ted/jittertravel/application/LegacyEventMigration.java`._
 
+[test: isIdempotentSecondRunRewritesNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java#L147 ]
+
 ## S4: An approved correction is applied in the same write as the shape upgrade @v1 [proposed]
 
 - Given: the stored Devnexus 2027 ConferencePlanned event at version 3, with country "United States" and an empty region
@@ -42,6 +48,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTes
 - and: the row is stamped with schema version 4
 
 _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java`, `src/main/java/dev/ted/jittertravel/application/LocationDataCorrections.java`, `src/main/java/dev/ted/jittertravel/application/LegacyEventMigration.java`._
+
+[test: appliesAnApprovedCorrectionInTheSameWriteAsTheRung : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java#L163 ]
 
 ## S5: The preview lists every approved correction and where it stands in this database @v1 [proposed]
 
@@ -54,6 +62,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTes
 
 _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java`, `src/main/java/dev/ted/jittertravel/application/LegacyEventMigration.java`._
 
+[test: previewListsEveryApprovedCorrectionWithWhereItStandsHere : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java#L185 ]
+
 ## S6: After writing, the migration reads the store again to check that every row and correction landed @v1 [proposed]
 
 - Given: a stored Devnexus event that needs a correction and a stored legacy hotel event
@@ -64,6 +74,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTes
 
 _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java`, `src/main/java/dev/ted/jittertravel/application/LegacyEventMigration.java`._
 
+[test: migrateReReadsTheStoreAndConfirmsEveryRowAndFixLanded : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java#L212 ]
+
 ## S7: A second run does not count corrections made by the first run @v1 [proposed]
 
 - Given: a first migration run has already applied the Devnexus correction
@@ -71,6 +83,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTes
 - Then: the verification shows "Corrections now in the database" as 0 expected and 0 actual
 
 _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java`, `src/main/java/dev/ted/jittertravel/application/LegacyEventMigration.java`._
+
+[test: aSecondRunExpectsNoNewCorrectionsAndFindsNone : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java#L234 ]
 
 ## S8: A row that cannot be migrated aborts the whole migration with nothing written @v1 [proposed]
 
@@ -80,6 +94,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTes
 - and: each failing row is reported as "Event <sequence> (<type>) cannot be migrated: <reason>"
 
 _Source: `src/main/java/dev/ted/jittertravel/application/LegacyEventMigration.java`, `src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java`._
+
+[test: oneUnbindableRowAbortsTheWholeMigrationLeavingEveryRowUntouched : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LegacyEventMigrationTest.java#L353 ]
 
 ## S9: A named correction changes its fields only while they still hold their approved old values @v1 [proposed]
 
@@ -91,6 +107,13 @@ _Source: `src/main/java/dev/ted/jittertravel/application/LegacyEventMigration.ja
 
 _Source: `src/main/java/dev/ted/jittertravel/application/LocationDataCorrections.java`._
 
+[test: anApprovedCorrectionChangesEveryFieldItNames : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LocationDataCorrectionsTest.java#L30 ]
+[test: aCorrectionWhoseValuesHaveSinceChangedIsLeftAlone : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LocationDataCorrectionsTest.java#L42 ]
+[test: reportsANamedFixAsAppliedThenAsAlreadyApplied : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LocationDataCorrectionsTest.java#L78 ]
+[test: reportsANamedFixWhoseValuesHaveChangedAsDiffering : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LocationDataCorrectionsTest.java#L93 ]
+[test: applyingItAgainChangesNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LocationDataCorrectionsTest.java#L66 ]
+[test: aTopLevelFieldIsCorrectedAlongsideTheNestedOnes : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LocationDataCorrectionsTest.java#L138 ]
+
 ## S10: Ground transfer airport ends with no country are filled in from the airport table @v1 [proposed]
 
 - Given: a GroundTransferPlanned event whose origin or destination has an airport code but no country
@@ -99,6 +122,12 @@ _Source: `src/main/java/dev/ted/jittertravel/application/LocationDataCorrections
 - and: an airport code missing from the table is reported as not filled, with a blank region and country
 
 _Source: `src/main/java/dev/ted/jittertravel/application/LocationDataCorrections.java`._
+
+[test: anAirportEndWithNoCountryIsCompletedFromItsAirportCode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LocationDataCorrectionsTest.java#L158 ]
+[test: reportsEachAirportEndItFillsInAndOneItCannot : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LocationDataCorrectionsTest.java#L121 ]
+[test: anEndWithoutAnAirportCodeIsNeverTouched : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LocationDataCorrectionsTest.java#L177 ]
+[test: anAirportEndThatAlreadyHasACountryIsNeverTouched : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LocationDataCorrectionsTest.java#L191 ]
+[test: anAirportCodeOnAnotherTypeIsNotTheAirportRule : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LocationDataCorrectionsTest.java#L205 ]
 
 ## S11: A conference is live only while it is planned and neither cancelled nor declined @v1 [proposed]
 
@@ -111,6 +140,13 @@ _Source: `src/main/java/dev/ted/jittertravel/application/LocationDataCorrections
 
 _Source: `src/test/java/dev/ted/jittertravel/application/LiveConferencePlanTest.java`, `src/main/java/dev/ted/jittertravel/application/LiveConferencePlan.java`._
 
+[test: aPlannedConferenceIsLiveAndCarriesItsPlan : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LiveConferencePlanTest.java#L35 ]
+[test: aConferenceNeverPlannedIsNotLive : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LiveConferencePlanTest.java#L44 ]
+[test: aCancelledConferenceIsNotLive : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LiveConferencePlanTest.java#L51 ]
+[test: aDeclinedConferenceIsNotLive : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LiveConferencePlanTest.java#L59 ]
+[test: anotherConferenceGoingAwayLeavesThisOneLive : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LiveConferencePlanTest.java#L67 ]
+[test: aRejectionLeavesTheConferenceLive : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/LiveConferencePlanTest.java#L79 ]
+
 ## S12: A one-off task is recorded as completed only once and only if it is declared @v1 [proposed]
 
 - Given: the post-deploy tasks declared in code
@@ -120,3 +156,10 @@ _Source: `src/test/java/dev/ted/jittertravel/application/LiveConferencePlanTest.
 - and: the task list shows outstanding tasks first, oldest declaration first
 
 _Source: `src/main/java/dev/ted/jittertravel/application/OneOffTasks.java`, `src/main/java/dev/ted/jittertravel/application/OneOffTaskProjector.java`, `src/main/java/dev/ted/jittertravel/application/OneOffTaskRegistry.java`, `src/main/java/dev/ted/jittertravel/application/OneOffTaskView.java`._
+
+[test: completingATaskAppendsTheCompletionEvent : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/OneOffTasksTest.java#L67 ]
+[test: completingAnAlreadyCompletedTaskWritesNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/OneOffTasksTest.java#L80 ]
+[test: completingAnUndeclaredTaskWritesNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/OneOffTasksTest.java#L92 ]
+[test: outstandingTasksComeFirstAndOldestDeclarationLeads : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/OneOffTasksTest.java#L58 ]
+[test: aDeclaredTaskWithNoCompletionIsOutstanding : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/OneOffTasksTest.java#L34 ]
+[test: aCompletedTaskDropsOutOfOutstandingButStaysInTheFullList : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/OneOffTasksTest.java#L43 ]

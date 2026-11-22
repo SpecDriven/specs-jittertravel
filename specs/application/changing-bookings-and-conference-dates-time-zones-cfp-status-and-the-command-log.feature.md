@@ -13,6 +13,9 @@ This part covers how flight, train, hotel, gathering, conference and private-eve
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.java`._
 
+[test: eachEndpointResolvesFromItsOwnAirportCode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.java#L30 ]
+[test: aLongHaulFlightsDurationOnlyMakesSenseAsInstants : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.java#L40 ]
+
 ## S2: An explicit zone pick wins over the airport code and may be a raw IANA zone @v1 [proposed]
 
 - Given: a flight request from SFO to FRA
@@ -21,6 +24,9 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.j
 - and: when the arrival zone is picked as "Asia/Tokyo", the arrival is stamped in Asia/Tokyo
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.java`._
+
+[test: explicitCommonZonePickWinsOverTheAirportCode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.java#L53 ]
+[test: aRawIanaZoneIdIsAcceptedBecauseTheFlightApiSuppliesOne : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.java#L64 ]
 
 ## S3: Malformed and unknown airport codes are refused @v1 [proposed]
 
@@ -32,6 +38,11 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.j
 
 _Source: `src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.java`, `src/test/java/dev/ted/jittertravel/application/ChangeFlightHandlerTest.java`, `src/main/java/dev/ted/jittertravel/application/ChangeFlightHandler.java`._
 
+[test: aMalformedAirportCodeIsRejectedAsACode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.java#L73 ]
+[test: aMalformedAirportCodeIsRejectedAsACode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeFlightHandlerTest.java#L43 ]
+[test: unknownAirportCodeWithNoPickIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.java#L79 ]
+[test: unknownAirportCodeIsAcceptedOnceAZoneIsPicked : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.java#L85 ]
+
 ## S4: A flight change reason is trimmed, and a missing reason becomes empty @v1 [proposed]
 
 - Given: a change-flight request
@@ -40,6 +51,10 @@ _Source: `src/test/java/dev/ted/jittertravel/application/BookFlightHandlerTest.j
 - and: a reason of "  Schedule shifted by airline  " is recorded as "Schedule shifted by airline"
 
 _Source: `src/test/java/dev/ted/jittertravel/application/ChangeFlightHandlerTest.java`, `src/main/java/dev/ted/jittertravel/application/ChangeFlightHandler.java`._
+
+[test: blankReasonIsNormalizedToEmpty : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeFlightHandlerTest.java#L18 ]
+[test: nullReasonIsNormalizedToEmpty : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeFlightHandlerTest.java#L26 ]
+[test: nonBlankReasonIsTrimmedAndPreserved : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeFlightHandlerTest.java#L34 ]
 
 ## S5: Changing a gathering works out its zone again from the submitted location @v1 [proposed]
 
@@ -51,6 +66,10 @@ _Source: `src/test/java/dev/ted/jittertravel/application/ChangeFlightHandlerTest
 
 _Source: `src/test/java/dev/ted/jittertravel/application/ChangeGatheringHandlerTest.java`, `src/main/java/dev/ted/jittertravel/application/ChangeGatheringHandler.java`._
 
+[test: movingTheVenueToAnotherCountryRederivesTheZone : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeGatheringHandlerTest.java#L27 ]
+[test: explicitZonePickWinsOverTheLocation : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeGatheringHandlerTest.java#L38 ]
+[test: unresolvableLocationWithNoPickIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeGatheringHandlerTest.java#L46 ]
+
 ## S6: Moved conference dates are stamped in the zone the conference was planned in @v1 [proposed]
 
 - Given: a conference planned in America/New_York
@@ -59,6 +78,8 @@ _Source: `src/test/java/dev/ted/jittertravel/application/ChangeGatheringHandlerT
 
 _Source: `src/test/java/dev/ted/jittertravel/application/ChangeConferenceDatesTest.java`, `src/main/java/dev/ted/jittertravel/application/ChangeConferenceDates.java`._
 
+[test: theMovedDatesAreStampedInTheZoneTheConferenceWasPlannedIn : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeConferenceDatesTest.java#L44 ]
+
 ## S7: A date change for an unknown, declined or cancelled conference is refused as not found @v1 [proposed]
 
 - Given: a conference that was never planned, was planned and then declined or cancelled, or is a different conference from the one that was planned
@@ -66,6 +87,11 @@ _Source: `src/test/java/dev/ted/jittertravel/application/ChangeConferenceDatesTe
 - Then: the change is refused as conference not found
 
 _Source: `src/test/java/dev/ted/jittertravel/application/ChangeConferenceDatesTest.java`, `src/main/java/dev/ted/jittertravel/application/ChangeConferenceDates.java`._
+
+[test: anUnknownConferenceIsRefused : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeConferenceDatesTest.java#L57 ]
+[test: aDeclinedConferenceIsRefused : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeConferenceDatesTest.java#L66 ]
+[test: aCancelledConferenceIsRefused : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeConferenceDatesTest.java#L76 ]
+[test: anotherConferencesPlanDoesNotCount : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/ChangeConferenceDatesTest.java#L86 ]
 
 ## S8: The command is logged as pending before its events are stored, and failures are marked @v1 [proposed]
 
@@ -77,6 +103,11 @@ _Source: `src/test/java/dev/ted/jittertravel/application/ChangeConferenceDatesTe
 
 _Source: `src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java`, `src/main/java/dev/ted/jittertravel/application/CommandExecutor.java`._
 
+[test: persistsCommandAsPendingBeforeExecutingThenAppendsEvents : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java#L38 ]
+[test: marksCommandFailedDomainAndDoesNotAppendWhenExecuteThrows : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java#L53 ]
+[test: marksCommandFailedPersistWhenAppendThrows : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java#L71 ]
+[test: appendEventsPathSavesPendingThenAppends : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java#L85 ]
+
 ## S9: An external action runs only after its command is logged, and a failed send stores nothing @v1 [proposed]
 
 - Given: work that reaches an outside system, such as sending mail
@@ -87,6 +118,10 @@ _Source: `src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.jav
 
 _Source: `src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java`, `src/main/java/dev/ted/jittertravel/application/CommandExecutor.java`._
 
+[test: externalActionRunsOnlyAfterTheCommandIsPersistedPending : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java#L114 ]
+[test: aThrowingExternalActionLeavesAFailedSendRowAndAppendsNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java#L133 ]
+[test: anAppendFailureAfterASuccessfulExternalActionIsMarkedFailedPersist : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java#L149 ]
+
 ## S10: Nothing is written in read-only mode @v1 [proposed]
 
 - Given: the event store is in read-only mode
@@ -95,6 +130,10 @@ _Source: `src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.jav
 - and: no command row is saved, no events are stored, and an external action does not run
 
 _Source: `src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java`, `src/main/java/dev/ted/jittertravel/application/CommandExecutor.java`._
+
+[test: executeWritesNothingInReadOnlyMode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java#L101 ]
+[test: externalActionWritesNothingAndRunsNothingInReadOnlyMode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java#L162 ]
+[test: appendEventsWritesNothingInReadOnlyMode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.java#L180 ]
 
 ## S11: A CFP is open only while a recorded deadline has not passed @v1 [proposed]
 
@@ -105,6 +144,11 @@ _Source: `src/test/java/dev/ted/jittertravel/application/CommandExecutorTest.jav
 - and: a conference with no recorded deadline is not open
 
 _Source: `src/test/java/dev/ted/jittertravel/application/CfpDeadlineViewTest.java`, `src/main/java/dev/ted/jittertravel/application/CfpDeadlineView.java`._
+
+[test: isOpenBeforeTheDeadline : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CfpDeadlineViewTest.java#L24 ]
+[test: isClosedAtTheDeadlineItself : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CfpDeadlineViewTest.java#L31 ]
+[test: isClosedAfterTheDeadline : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CfpDeadlineViewTest.java#L38 ]
+[test: anUnrecordedDeadlineIsNotOpen : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/application/CfpDeadlineViewTest.java#L45 ]
 
 ## S12: A place reads as "City, state" in the US and "City, Country" everywhere else @v1 [proposed]
 

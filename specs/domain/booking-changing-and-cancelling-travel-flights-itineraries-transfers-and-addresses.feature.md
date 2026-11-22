@@ -13,6 +13,8 @@ This part covers the domain rules for booking flights and multi-leg flight itine
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/BookFlightCommand.java`._
 
+[test: executeProducesFlightBookedEvent : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java#L20 ]
+
 ## S2: A flight arriving before it departs is refused as the command is built @v1 [proposed]
 
 - Given: an arrival date/time that is not after the departure date/time
@@ -22,6 +24,8 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java`,
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/BookFlightCommand.java`._
 
+[test: arrivalBeforeDepartureIsRefusedAsTheCommandIsBuilt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java#L60 ]
+
 ## S3: A flight departing in the past is refused @v1 [proposed]
 
 - Given: the departure is not after now
@@ -29,6 +33,8 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java`,
 - Then: it is refused with DepartureNotInFuture, "Departure date/time must be in the future"
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/BookFlightCommand.java`._
+
+[test: departureInPastThrowsDepartureNotInFuture : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java#L42 ]
 
 ## S4: A flight overlapping an already booked leg is refused and the refusal names the blocking leg @v1 [proposed]
 
@@ -38,6 +44,8 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java`,
 - and: the refusal identifies the booked train leg as the leg that blocks it
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/BookFlightCommand.java`._
+
+[test: aFlightOverlappingAnAlreadyBookedLegIsRefused : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java#L77 ]
 
 ## S5: Booking an itinerary books every leg and records which flights belong together @v1 [proposed]
 
@@ -49,6 +57,9 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightCommandTest.java`,
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/BookFlightItineraryCommand.java`._
 
+[test: everyLegIsBookedAndTheItineraryRecordsWhichFlightsBelongTogether : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTest.java#L25 ]
+[test: aConnectionIsNotAConflict : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTest.java#L42 ]
+
 ## S6: Overlapping legs of the same itinerary are both refused, each naming the other @v1 [proposed]
 
 - Given: leg 1 runs from 08:00 to 11:00 and leg 2 from 10:00 to 12:00
@@ -58,6 +69,8 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTe
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/BookFlightItineraryCommand.java`._
 
+[test: twoLegsOfTheSameItineraryThatOverlapAreBothRefusedNamingEachOther : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTest.java#L53 ]
+
 ## S7: An itinerary leg that collides with a flight already booked is refused @v1 [proposed]
 
 - Given: a flight is already booked from 09:00 to 12:00
@@ -65,6 +78,8 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTe
 - Then: FlightItineraryRefused holds one refusal for that leg, with the reason OverlappingLegRefused
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/BookFlightItineraryCommand.java`._
+
+[test: aLegCollidingWithAFlightAlreadyBookedIsRefusedWithTheBlockingLeg : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTest.java#L68 ]
 
 ## S8: Every itinerary refusal is reported together, each against its own leg @v1 [proposed]
 
@@ -76,6 +91,9 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTe
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/BookFlightItineraryCommand.java`._
 
+[test: everyRefusalIsReportedTogetherEachAgainstItsOwnLeg : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTest.java#L82 ]
+[test: anItineraryHasAtLeastOneLeg : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTest.java#L99 ]
+
 ## S9: Cancelling a live flight records FlightCancelled, and an unknown flight is refused @v1 [proposed]
 
 - Given: a live flight
@@ -86,6 +104,10 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookFlightItineraryCommandTe
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/CancelFlightCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/CancelFlightCommand.java`._
 
+[test: cancellingALiveFlightEmitsFlightCancelledWithWhenItWasCancelled : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelFlightCommandTest.java#L17 ]
+[test: cancellingAFlightThatDoesNotExistIsRefused : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelFlightCommandTest.java#L25 ]
+[test: anAbsentReasonBecomesEmptyRatherThanNull : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelFlightCommandTest.java#L34 ]
+
 ## S10: Ground transfers can be cancelled at any time, but only if they exist @v1 [proposed]
 
 - Given: a live ground transfer, even one whose time has already passed
@@ -94,6 +116,10 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/CancelFlightCommandTest.java
 - and: cancelling a transfer that does not exist, or was already cancelled, is refused with GroundTransferNotFound
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/CancelGroundTransferCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/CancelGroundTransferCommand.java`._
+
+[test: emitsCancelledEventForTheTransferBeingCancelled : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelGroundTransferCommandTest.java#L13 ]
+[test: unknownTransferIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelGroundTransferCommandTest.java#L25 ]
+[test: aTransferThatHasAlreadyHappenedIsStillCancellable : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelGroundTransferCommandTest.java#L33 ]
 
 ## S11: Address fields are trimmed, never null, and the matching location falls back to the city @v1 [proposed]
 
@@ -106,6 +132,13 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/CancelGroundTransferCommandT
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/AddressTest.java`, `src/main/java/dev/ted/jittertravel/domain/Address.java`._
 
+[test: surroundingWhitespaceIsRemovedFromEveryField : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AddressTest.java#L19 ]
+[test: aCityTypedWithATrailingSpaceIsTheSamePlaceAsOneWithout : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AddressTest.java#L29 ]
+[test: everyAbsentFieldBecomesTheBlankString : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AddressTest.java#L39 ]
+[test: absentMatchingLocationFallsBackToTheTrimmedCity : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AddressTest.java#L47 ]
+[test: whitespaceOnlyMatchingLocationFallsBackToTheCity : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AddressTest.java#L60 ]
+[test: aMatchingLocationThatDiffersFromTheCityIsKept : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AddressTest.java#L68 ]
+
 ## S12: Airport codes are three letters, stored in upper case, and resolve to a known time zone @v1 [proposed]
 
 - Given: an airport code
@@ -116,3 +149,10 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/AddressTest.java`, `src/main
 - and: a code missing from the airport table is refused with ZoneResolutionException; there is no default zone
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/AirportCodeTest.java`, `src/test/java/dev/ted/jittertravel/domain/AirportZoneResolverTest.java`, `src/main/java/dev/ted/jittertravel/domain/AirportCode.java`, `src/main/java/dev/ted/jittertravel/domain/AirportZoneResolver.java`._
+
+[test: lowercaseIsNormalizedToUppercase : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AirportCodeTest.java#L11 ]
+[test: mixedCaseIsNormalizedToUppercase : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AirportCodeTest.java#L16 ]
+[test: nullCodeIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AirportCodeTest.java#L21 ]
+[test: wrongLengthIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AirportCodeTest.java#L27 ]
+[test: nonLettersAreRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AirportCodeTest.java#L35 ]
+[test: resolvesKnownAirportToItsZone : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/AirportZoneResolverTest.java#L15 ]
