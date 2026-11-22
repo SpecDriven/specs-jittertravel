@@ -13,6 +13,8 @@ This part covers two things. First, how Ted records that he will attend a confer
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/ConfirmConferenceAttendanceCommand.java`, `src/main/java/dev/ted/jittertravel/domain/ConferenceAttendanceConfirmed.java`, `src/test/java/dev/ted/jittertravel/domain/ConfirmConferenceAttendanceCommandTest.java`._
 
+[test: emitsConfirmedEventCarryingTheBasisAndTimestamp : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ConfirmConferenceAttendanceCommandTest.java#L20 ]
+
 ## S2: Confirming attendance for an unknown conference is refused @v1 [proposed]
 
 - Given: no live conference with the given id, because it was never planned, was cancelled or was declined
@@ -22,6 +24,8 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/ConfirmConferenceAttendanceC
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/ConfirmConferenceAttendanceCommand.java`, `src/main/java/dev/ted/jittertravel/domain/ConfirmConferenceAttendanceContext.java`, `src/test/java/dev/ted/jittertravel/domain/ConfirmConferenceAttendanceCommandTest.java`._
 
+[test: unknownConferenceIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ConfirmConferenceAttendanceCommandTest.java#L33 ]
+
 ## S3: A confirmed attendance without a basis is rejected @v1 [proposed]
 
 - Given: a conference id and a confirmation time
@@ -29,6 +33,8 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/ConfirmConferenceAttendanceC
 - Then: it fails with a message containing "basis must not be null"
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/ConferenceAttendanceConfirmed.java`, `src/test/java/dev/ted/jittertravel/domain/ConfirmConferenceAttendanceCommandTest.java`._
+
+[test: aConfirmationWithoutABasisFailsLoud : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ConfirmConferenceAttendanceCommandTest.java#L49 ]
 
 ## S4: Declining a conference records the reason and the moment of declining, whatever the dates @v1 [proposed]
 
@@ -39,6 +45,9 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/ConferenceAttendanceConfirme
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/DeclineConferenceCommand.java`, `src/main/java/dev/ted/jittertravel/domain/ConferenceAttendanceDeclined.java`, `src/test/java/dev/ted/jittertravel/domain/DeclineConferenceCommandTest.java`._
 
+[test: emitsDeclinedEventCarryingTheReasonAndTimestamp : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/DeclineConferenceCommandTest.java#L16 ]
+[test: existingConferenceIsDeclinableWithNoTimeGateAtAll : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/DeclineConferenceCommandTest.java#L50 ]
+
 ## S5: Declining without a reason records an empty reason @v1 [proposed]
 
 - Given: a conference that exists
@@ -47,6 +56,8 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/DeclineConferenceCommand.jav
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/DeclineConferenceCommand.java`, `src/main/java/dev/ted/jittertravel/domain/ConferenceAttendanceDeclined.java`, `src/test/java/dev/ted/jittertravel/domain/DeclineConferenceCommandTest.java`._
 
+[test: absentReasonBecomesEmptyStringRatherThanNull : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/DeclineConferenceCommandTest.java#L29 ]
+
 ## S6: Declining an unknown conference is refused @v1 [proposed]
 
 - Given: no live conference with the given id
@@ -54,6 +65,8 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/DeclineConferenceCommand.jav
 - Then: the command fails with ConferenceNotFound
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/DeclineConferenceCommand.java`, `src/main/java/dev/ted/jittertravel/domain/DeclineConferenceContext.java`, `src/test/java/dev/ted/jittertravel/domain/DeclineConferenceCommandTest.java`._
+
+[test: unknownConferenceIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/DeclineConferenceCommandTest.java#L42 ]
 
 ## S7: A country code returns the country's English name, and only codes are known @v1 [proposed]
 
@@ -64,6 +77,9 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/DeclineConferenceCommand.jav
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/Countries.java`, `src/test/java/dev/ted/jittertravel/domain/CountriesTest.java`._
 
+[test: aNameOrAnUnassignedCodeIsNotACountryCode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CountriesTest.java#L33 ]
+[test: aNullCodeIsNotACountry : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CountriesTest.java#L63 ]
+
 ## S8: A country name gets a code only when it matches the table's spelling exactly @v1 [proposed]
 
 - Given: the countries table
@@ -73,6 +89,8 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/Countries.java`, `src/test/j
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/Countries.java`, `src/test/java/dev/ted/jittertravel/domain/CountriesTest.java`._
 
+[test: anAbbreviationOrAnOldNameHasNoCode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CountriesTest.java#L56 ]
+
 ## S9: The full country list holds 198 countries, sorted by name @v1 [proposed]
 
 - Given: the countries table
@@ -81,6 +99,8 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/Countries.java`, `src/test/j
 - and: the list is sorted by name, not by code, from Afghanistan (AF) to Zimbabwe (ZW), so Germany (DE) comes before Ghana (GH)
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/Countries.java`, `src/main/java/dev/ted/jittertravel/domain/Country.java`, `src/test/java/dev/ted/jittertravel/domain/CountriesTest.java`._
+
+[test: allIsEveryCountryAToZByName : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CountriesTest.java#L70 ]
 
 ## S10: An entered country must be a known code, and the US, Canada and Australia need a valid state or province @v1 [proposed]
 
@@ -94,6 +114,10 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/Countries.java`, `src/main/j
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/EnteredCountry.java`, `src/main/java/dev/ted/jittertravel/domain/InvalidEnteredLocation.java`, `src/main/java/dev/ted/jittertravel/domain/InvalidLocationEntry.java`, `src/test/java/dev/ted/jittertravel/domain/EnteredCountryTest.java`._
 
+[test: aCountryThatIsNotACodeIsUnknown : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredCountryTest.java#L35 ]
+[test: checkThrowsEveryProblemTogether : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredCountryTest.java#L96 ]
+[test: checkPassesQuietlyWhenThereIsNothingWrong : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredCountryTest.java#L105 ]
+
 ## S11: A train station's country is checked but no region is required @v1 [proposed]
 
 - Given: a train station in country "US" with no region
@@ -103,6 +127,10 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/EnteredCountry.java`, `src/m
 - and: an absent address has nothing to check and gets no problems
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/EnteredCountry.java`, `src/test/java/dev/ted/jittertravel/domain/EnteredCountryTest.java`._
+
+[test: aStationIsNeverAskedForARegion : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredCountryTest.java#L70 ]
+[test: aStationsCountryIsStillChecked : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredCountryTest.java#L79 ]
+[test: anAbsentAddressHasNothingToCheck : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredCountryTest.java#L88 ]
 
 ## S12: An entered building and city must both be filled in, and the city must not look like a building @v1 [proposed]
 
@@ -114,3 +142,10 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/EnteredCountry.java`, `src/t
 - and: country problems are added on their own fields, there is at most one problem per field, and all the problems are reported together
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/EnteredLocation.java`, `src/main/java/dev/ted/jittertravel/domain/InvalidEnteredLocation.java`, `src/main/java/dev/ted/jittertravel/domain/InvalidLocationEntry.java`._
+
+[test: blankVenueNameIsRejectedAgainstTheNameField : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredLocationTest.java#L29 ]
+[test: blankCityIsRejectedAgainstTheCityField : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredLocationTest.java#L51 ]
+[test: isRejectedAgainstTheCityField : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredLocationTest.java#L132 ]
+[test: aCountryProblemIsReportedAlongsideTheCityOnesOnItsOwnField : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredLocationTest.java#L268 ]
+[test: aBlankNameAndABlankCityAreBothReported : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredLocationTest.java#L74 ]
+[test: throwsEveryProblemTogetherRatherThanTheFirst : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/EnteredLocationTest.java#L218 ]

@@ -13,6 +13,11 @@ This part covers booking a hotel stay and a train trip. Mistakes in what was typ
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java`._
 
+[test: validTentativeCommandProducesHotelBookedEventWithAllFields : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L25 ]
+[test: validFinalCommandProducesHotelBookedEventWithFinalIntent : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L48 ]
+[test: cancelByIsCarriedOntoTheEventWhenItPrecedesCheckIn : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L104 ]
+[test: absentCancelByStaysNullOnTheEvent : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L117 ]
+
 ## S2: A hotel check-in must be strictly in the future @v1 [proposed]
 
 - Given: a hotel booking whose check-in is an hour ago, or exactly now
@@ -20,6 +25,9 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java`._
 - Then: it is refused with CheckInNotInFuture
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java`._
+
+[test: checkInInPastThrowsCheckInNotInFuture : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L58 ]
+[test: checkInExactlyNowIsNotAcceptedMustBeStrictlyAfter : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L68 ]
 
 ## S3: The hotel's dates and cancel-by deadline are checked as the booking is built @v1 [proposed]
 
@@ -32,6 +40,11 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java`._
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java`._
 
+[test: checkOutOnSameDayAsCheckInIsRefusedAsTheCommandIsBuilt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L84 ]
+[test: checkOutExactlyOneDayAfterCheckInIsValid : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L92 ]
+[test: cancelByAfterCheckInIsRefusedAsTheCommandIsBuilt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L137 ]
+[test: cancelByExactlyAtCheckInIsAccepted : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L126 ]
+
 ## S4: Every location problem with a hotel stay is reported in one answer @v1 [proposed]
 
 - Given: a hotel stay with no name and no city
@@ -42,6 +55,13 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java`._
 - and: a location problem is reported ahead of a bad date range or a past check-in
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java`._
+
+[test: aStayWithNoNameAndNoCityReportsBothInOneAnswer : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L181 ]
+[test: aUsStayWithNoStateIsRejectedAgainstTheRegionField : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L145 ]
+[test: hotelNamePastedIntoTheCityIsRejectedAgainstTheCityField : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L165 ]
+[test: hotelWithNoNameIsRejectedAgainstTheNameField : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L156 ]
+[test: locationIsCheckedBeforeTheDates : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L194 ]
+[test: aDataEntryMistakeIsRefusedBeforeThePastCheckInCouldBe : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java#L210 ]
 
 ## S5: A valid train booking records TrainBooked, and its departure must be strictly in the future @v1 [proposed]
 
@@ -54,6 +74,12 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookHotelCommandTest.java`._
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/TrainBooked.java`._
 
+[test: validCommandProducesTrainBookedEventWithAllFields : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L34 ]
+[test: arrivalSameDayAsDepartureIsValid : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L82 ]
+[test: departureInPastThrowsDepartureNotInFuture : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L57 ]
+[test: departureExactlyNowIsNotAcceptedMustBeStrictlyAfter : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L66 ]
+[test: arrivalBeforeDepartureIsRefusedAsTheCommandIsBuilt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L75 ]
+
 ## S6: Station problems at both ends of a train trip are reported together @v1 [proposed]
 
 - Given: a departure station with no name and an arrival station whose name was pasted into the city
@@ -63,6 +89,13 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java`, 
 - and: a station problem is reported ahead of an inverted time range or a past departure
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java`, `src/main/java/dev/ted/jittertravel/domain/TrainStations.java`._
+
+[test: bothEndsAtFaultAreReportedTogether : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L125 ]
+[test: oneEndWithNoNameAndNoCityContributesBothProblems : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L151 ]
+[test: locationIsCheckedBeforeTheTimes : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L165 ]
+[test: aDataEntryMistakeIsRefusedBeforeThePastDepartureCouldBe : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L180 ]
+[test: stationWithNoNameIsRefusedForThatEndAsTheCommandIsBuilt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L92 ]
+[test: stationNamePastedIntoTheCityIsRefusedForThatEndAsTheCommandIsBuilt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L108 ]
 
 ## S7: A train trip that overlaps a booked leg is refused, but a connection is accepted @v1 [proposed]
 
@@ -74,6 +107,12 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java`, 
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java`, `src/test/java/dev/ted/jittertravel/domain/ScheduledLegsTest.java`, `src/main/java/dev/ted/jittertravel/domain/ScheduledLeg.java`._
 
+[test: aTripOverlappingAnAlreadyBookedLegIsRefused : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L200 ]
+[test: aTripConnectingOutOfABookedLegIsAccepted : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L213 ]
+[test: theDateRulesAreCheckedBeforeTheOverlap : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java#L227 ]
+[test: aJourneyOverlappingABookedLegIsReported : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ScheduledLegsTest.java#L22 ]
+[test: aConnectionIsNotACollision : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ScheduledLegsTest.java#L30 ]
+
 ## S8: Collision checks skip the leg being changed and report only the first collision @v1 [proposed]
 
 - Given: a schedule of booked legs
@@ -84,6 +123,13 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/BookTrainCommandTest.java`, 
 - and: windows entirely before or after a leg, or an empty schedule, give no collision
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/ScheduledLegsTest.java`, `src/main/java/dev/ted/jittertravel/domain/ScheduledLegs.java`._
+
+[test: aLegDoesNotCollideWithItself : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ScheduledLegsTest.java#L49 ]
+[test: changingALegStillCollidesWithADifferentOne : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ScheduledLegsTest.java#L59 ]
+[test: aFlightCollidesWithATrainBecauseTheKindIsNotTheQuestion : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ScheduledLegsTest.java#L70 ]
+[test: theFirstCollidingLegIsReported : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ScheduledLegsTest.java#L78 ]
+[test: aJourneyEntirelyBeforeOrAfterIsNotACollision : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ScheduledLegsTest.java#L39 ]
+[test: anEmptyScheduleCollidesWithNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ScheduledLegsTest.java#L92 ]
 
 ## S9: Airport codes resolve to their city and address, and a city resolves back only to its one airport @v1 [proposed]
 
@@ -97,6 +143,13 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/ScheduledLegsTest.java`, `sr
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/StaticAirportCityResolverTest.java`, `src/main/java/dev/ted/jittertravel/domain/StaticAirportCityResolver.java`._
 
+[test: aKnownCodeResolvesToItsCity : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/StaticAirportCityResolverTest.java#L16 ]
+[test: anUnknownCodeIsReturnedAsIsRatherThanGuessed : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/StaticAirportCityResolverTest.java#L29 ]
+[test: anAirportsAddressIsItsCityStateAndCountryCode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/StaticAirportCityResolverTest.java#L75 ]
+[test: anAirportOutsideTheStateListCountriesHasNoRegion : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/StaticAirportCityResolverTest.java#L82 ]
+[test: anUnknownAirportHasNoAddress : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/StaticAirportCityResolverTest.java#L89 ]
+[test: aCityWithExactlyOneAirportResolvesBackToIt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/StaticAirportCityResolverTest.java#L34 ]
+
 ## S10: The United States, Canada and Australia pick their region from a list @v1 [proposed]
 
 - Given: the subdivision lists
@@ -108,6 +161,13 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/StaticAirportCityResolverTes
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/SubdivisionsTest.java`, `src/main/java/dev/ted/jittertravel/domain/Subdivisions.java`._
 
+[test: theUnitedStatesCanadaAndAustraliaRequireARegion : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/SubdivisionsTest.java#L15 ]
+[test: everywhereElseTheRegionIsFreeText : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/SubdivisionsTest.java#L23 ]
+[test: eachListIsComplete : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/SubdivisionsTest.java#L33 ]
+[test: aCodeIsFoundInItsOwnCountry : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/SubdivisionsTest.java#L46 ]
+[test: aNameIsFoundInItsOwnCountryOnly : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/SubdivisionsTest.java#L59 ]
+[test: aCodeFromAnotherCountryOrANameIsNotFound : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/SubdivisionsTest.java#L72 ]
+
 ## S11: Train station entries are cleaned of surrounding whitespace @v1 [proposed]
 
 - Given: a station entered with leading or trailing spaces, or with fields left empty
@@ -116,6 +176,10 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/SubdivisionsTest.java`, `src
 - and: "Hamburg " and "Hamburg" count as the same city
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/TrainStationAddressTest.java`, `src/main/java/dev/ted/jittertravel/domain/TrainStationAddress.java`._
+
+[test: surroundingWhitespaceIsRemovedFromEveryField : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TrainStationAddressTest.java#L16 ]
+[test: everyAbsentFieldBecomesTheBlankString : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TrainStationAddressTest.java#L37 ]
+[test: aCityTypedWithATrailingSpaceIsTheSamePlaceAsOneWithout : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TrainStationAddressTest.java#L27 ]
 
 ## S12: Submitting or withdrawing a talk is refused when it would record something untrue @v1 [proposed]
 
@@ -127,3 +191,10 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/TrainStationAddressTest.java
 - Then: a TalkWithdrawn event is produced only when the talk is SUBMITTED or ACCEPTED, and NoTalkToWithdraw is refused in every other state
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/SubmitTalkCommand.java`, `src/main/java/dev/ted/jittertravel/domain/WithdrawTalkCommand.java`, `src/main/java/dev/ted/jittertravel/domain/TalkPipelineContext.java`._
+
+[test: emitsTalkSubmitted : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TalkPipelineCommandTest.java#L38 ]
+[test: unknownConferenceIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TalkPipelineCommandTest.java#L51 ]
+[test: anOpenSpaceConferenceIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TalkPipelineCommandTest.java#L60 ]
+[test: submittingAfterAnAcceptanceIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TalkPipelineCommandTest.java#L77 ]
+[test: submittingAgainIsAllowedFromEveryOtherState : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TalkPipelineCommandTest.java#L86 ]
+[test: withdrawingWithNothingOutstandingIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TalkPipelineCommandTest.java#L252 ]

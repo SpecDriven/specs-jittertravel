@@ -14,6 +14,10 @@ This part covers how a place's time zone is worked out from its city, state or p
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/LocationZoneResolver.java`, `src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java`._
 
+[test: cityStillWinsOverItsState : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L204 ]
+[test: resolvesCityCaseAndWhitespaceInsensitively : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L168 ]
+[test: cityTakesPrecedenceForMultiZoneCountry : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L161 ]
+
 ## S2: A town missing from the city table resolves from its state code, read only within its own country @v1 [proposed]
 
 - Given: an address in a town no table lists, with region "WA"
@@ -23,6 +27,9 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/LocationZoneResolver.java`, 
 - and: Centennial, CO, US resolves to America/Denver and North Kawartha, ON, CA resolves to America/Toronto
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/LocationZoneResolver.java`, `src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java`._
+
+[test: regionIsScopedToItsCountry : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L211 ]
+[test: everyStateAndProvinceTheFormOffersResolves : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L45 ]
 
 ## S3: An unknown place fails instead of falling back to a default zone @v1 [proposed]
 
@@ -34,6 +41,12 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/LocationZoneResolver.java`, 
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/LocationZoneResolver.java`, `src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java`._
 
+[test: unknownRegionInAMultiZoneCountryStillThrows : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L228 ]
+[test: failureMessageNamesTheRegionItTried : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L235 ]
+[test: throwsForNullAddress : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L180 ]
+[test: throwsWhenLocationUnknown : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L174 ]
+[test: throwsWhenCityCountryPairUnknown : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L195 ]
+
 ## S4: In a single-zone country the region is ignored @v1 [proposed]
 
 - Given: an address "Steventon" with region "Abingdon" and country "GB"
@@ -42,6 +55,9 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/LocationZoneResolver.java`, 
 - and: a train station given only as a city and country resolves the same way, so Frankfurt, DE is Europe/Berlin
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/LocationZoneResolver.java`, `src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java`._
+
+[test: regionIsIgnoredForSingleZoneCountries : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L221 ]
+[test: resolvesByCityCountryPairForTrainStations : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/LocationZoneResolverTest.java#L186 ]
 
 ## S5: More than 24 hours on the ground ends a journey @v1 [proposed]
 
@@ -53,6 +69,10 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/LocationZoneResolver.java`, 
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/Journey.java`, `src/test/java/dev/ted/jittertravel/domain/JourneyTest.java`._
 
+[test: thirteenDaysOnTheGroundEndAJourney : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/JourneyTest.java#L16 ]
+[test: exactlyTwentyFourHoursOnTheGroundIsAConnectionAndAMinuteMoreIsNot : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/JourneyTest.java#L44 ]
+[test: anOvernightLayoverIsStillAConnection : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/JourneyTest.java#L33 ]
+
 ## S6: Journeys are built in departure order and run from their first leg to their last @v1 [proposed]
 
 - Given: two connecting legs supplied in reverse order
@@ -62,6 +82,10 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/Journey.java`, `src/test/jav
 - and: no legs give no journeys
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/Journey.java`, `src/test/java/dev/ted/jittertravel/domain/JourneyTest.java`._
+
+[test: legsAreTakenInDepartureOrderWhateverOrderTheyArriveIn : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/JourneyTest.java#L58 ]
+[test: aJourneyDepartsWithItsFirstLegAndArrivesWithItsLast : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/JourneyTest.java#L75 ]
+[test: noLegsAreNoJourneys : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/JourneyTest.java#L69 ]
 
 ## S7: A pasted itinerary change is matched to booked legs and listed as unchanged, changed, added or removed @v1 [proposed]
 
@@ -73,6 +97,13 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/Journey.java`, `src/test/jav
 - and: the rows are listed in departure order, and every refusal is collected so all of them are reported together
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/ItineraryChangePlan.java`._
+
+[test: aFlightNumberChangeOnTheSameRouteIsOneChangedLegNotARemovalAndAnAddition : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L75 ]
+[test: aLegMovedToAnotherDayIsMatchedByRoute : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L89 ]
+[test: aBookedLegMatchedOnceCannotBeMatchedAgainByARouteItShares : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L113 ]
+[test: aFlownLegMissingFromThePasteIsLeftAloneNotDropped : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L150 ]
+[test: aLegTheAirlineAddedIsBookedAndJoinsTheTrip : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L47 ]
+[test: aLegTheAirlineDroppedIsCancelledButStaysPartOfTheTrip : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L62 ]
 
 ## S8: An itinerary change refuses legs that rewrite history, return cancelled legs, or collide @v1 [proposed]
 
@@ -86,6 +117,13 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/ItineraryChangePlan.java`._
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/ItineraryChangePlan.java`, `src/main/java/dev/ted/jittertravel/domain/LegCancelledEarlier.java`, `src/main/java/dev/ted/jittertravel/domain/OverlapsAnotherItineraryLeg.java`, `src/main/java/dev/ted/jittertravel/domain/OverlappingLegRefused.java`._
 
+[test: aFlownLegGivenDifferentTimesRefusesTheWholeChange : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L136 ]
+[test: aLegCancelledOnItsOwnEarlierIsRefusedNotQuietlyBookedAgain : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L239 ]
+[test: aMovedLegThatNowDepartsInThePastIsRefused : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L333 ]
+[test: aMovedLegCollidingWithAnotherBookingIsRefusedWithTheBlockingLeg : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L282 ]
+[test: pastedLegsThatOverlapEachOtherAreRefusedNamingEachOther : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L303 ]
+[test: aRebookingStillRefusesALegCancelledOnItsOwnEarlier : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/ChangeFlightItineraryCommandTest.java#L210 ]
+
 ## S9: An existing hotel booking can be cancelled at any time, with its reason kept @v1 [proposed]
 
 - Given: a hotel booking that exists
@@ -97,6 +135,11 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/ItineraryChangePlan.java`, `
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/CancelHotelCommandTest.java`._
 
+[test: emitsCancelledEventCarryingTheReason : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelHotelCommandTest.java#L13 ]
+[test: existingBookingIsCancellableWithNoTimeGateAtAll : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelHotelCommandTest.java#L45 ]
+[test: absentReasonBecomesEmptyStringRatherThanNull : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelHotelCommandTest.java#L25 ]
+[test: unknownBookingIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelHotelCommandTest.java#L37 ]
+
 ## S10: Cancelling a train trip that does not exist is refused @v1 [proposed]
 
 - Given: a train trip id with no trip behind it
@@ -105,6 +148,10 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/CancelHotelCommandTest.java`
 - and: cancelling an existing trip emits a train cancelled event with the reason, or with an empty string when no reason is given
 
 _Source: `src/test/java/dev/ted/jittertravel/domain/CancelTrainCommandTest.java`._
+
+[test: cancellingATripThatDoesNotExistIsRefused : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelTrainCommandTest.java#L21 ]
+[test: cancellingALiveTripEmitsTrainCancelled : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelTrainCommandTest.java#L13 ]
+[test: anAbsentReasonBecomesEmptyRatherThanNull : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/CancelTrainCommandTest.java#L30 ]
 
 ## S11: Planning a conference or private event checks its dates @v1 [proposed]
 
@@ -116,6 +163,13 @@ _Source: `src/test/java/dev/ted/jittertravel/domain/CancelTrainCommandTest.java`
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/PlanConferenceCommand.java`, `src/main/java/dev/ted/jittertravel/domain/PlanPrivateEventCommand.java`, `src/main/java/dev/ted/jittertravel/domain/PrivateEventDateNotInFuture.java`._
 
+[test: endBeforeStartIsRefusedAsTheCommandIsBuilt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/PlanConferenceCommandTest.java#L90 ]
+[test: aBackwardsRangeIsRefusedAsTheCommandIsBuiltEvenWhenItHasAlsoEnded : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/PlanConferenceCommandTest.java#L83 ]
+[test: aConferenceThatEndedYesterdayIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/PlanConferenceCommandTest.java#L53 ]
+[test: theLastDayItselfIsAcceptedEvenAfterItsEndTime : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/PlanConferenceCommandTest.java#L40 ]
+[test: privateEventDateInPastThrowsPrivateEventDateNotInFuture : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/PlanPrivateEventCommandTest.java#L84 ]
+[test: endTimeBeforeStartTimeIsRefusedAsTheCommandIsBuilt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/PlanPrivateEventCommandTest.java#L113 ]
+
 ## S12: Recording a CFP, a speaking invitation or a rejected talk needs a conference, and some need a submitted talk @v1 [proposed]
 
 - Given: a conference
@@ -125,3 +179,10 @@ _Source: `src/main/java/dev/ted/jittertravel/domain/PlanConferenceCommand.java`,
 - and: a talk rejection is refused when no talk was submitted, including when Ted was only invited to speak
 
 _Source: `src/main/java/dev/ted/jittertravel/domain/OpenCfpCommand.java`, `src/main/java/dev/ted/jittertravel/domain/InviteToSpeakCommand.java`, `src/main/java/dev/ted/jittertravel/domain/RejectTalkCommand.java`, `src/main/java/dev/ted/jittertravel/domain/NoTalkToDecide.java`._
+
+[test: anOpenSpaceConferenceHasNoCfpToClose : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/OpenCfpCommandTest.java#L85 ]
+[test: aDeadlineInThePastIsRecordableWithNoTimeGateAtAll : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/OpenCfpCommandTest.java#L68 ]
+[test: unknownConferenceIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/OpenCfpCommandTest.java#L55 ]
+[test: anOpenSpaceConferenceCanStillInvite : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TalkPipelineCommandTest.java#L306 ]
+[test: emitsNoAttendanceEventOfItsOwn : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TalkPipelineCommandTest.java#L330 ]
+[test: rejectingWhenNothingWasSubmittedIsRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/domain/TalkPipelineCommandTest.java#L191 ]
