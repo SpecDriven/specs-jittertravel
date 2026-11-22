@@ -13,6 +13,8 @@ This part covers several helpers. A link opens Google Calendar's event editor al
 
 _Source: `src/main/java/dev/ted/jittertravel/web/GoogleCalendarLink.java`, `src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java`._
 
+[test: templateUrlCarriesTitleLocalTimesAndZone : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java#L17 ]
+
 ## S2: Link times use the venue's wall clock, never UTC @v1 [proposed]
 
 - Given: a dinner from 19:30 to 22:00 in Berlin
@@ -22,6 +24,8 @@ _Source: `src/main/java/dev/ted/jittertravel/web/GoogleCalendarLink.java`, `src/
 
 _Source: `src/main/java/dev/ted/jittertravel/web/GoogleCalendarLink.java`, `src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java`._
 
+[test: timesAreTheVenuesWallClockNeverUtc : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java#L40 ]
+
 ## S3: An end recorded in another zone is shown in the start's zone @v1 [proposed]
 
 - Given: a start at 09:00 in Berlin and an end at 03:00 in Denver on the same date
@@ -29,6 +33,8 @@ _Source: `src/main/java/dev/ted/jittertravel/web/GoogleCalendarLink.java`, `src/
 - Then: dates reads 20260915T090000/20260915T110000 and ctz is Europe/Berlin
 
 _Source: `src/main/java/dev/ted/jittertravel/web/GoogleCalendarLink.java`, `src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java`._
+
+[test: endIsFormattedInTheStartsZone : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java#L56 ]
 
 ## S4: A blank location and blank details are left out, and the title is URL-encoded @v1 [proposed]
 
@@ -39,6 +45,9 @@ _Source: `src/main/java/dev/ted/jittertravel/web/GoogleCalendarLink.java`, `src/
 
 _Source: `src/main/java/dev/ted/jittertravel/web/GoogleCalendarLink.java`, `src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java`._
 
+[test: blankLocationAndDetailsAreOmittedEntirely : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java#L70 ]
+[test: titleWithSpacesAndPunctuationIsUrlEncoded : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java#L80 ]
+
 ## S5: The calendar icon link opens in a new tab with a tooltip @v1 [proposed]
 
 - Given: a Google Calendar URL and the tooltip "Add Dinner to Google Calendar"
@@ -48,6 +57,9 @@ _Source: `src/main/java/dev/ted/jittertravel/web/GoogleCalendarLink.java`, `src/
 
 _Source: `src/main/java/dev/ted/jittertravel/web/GoogleCalendarLink.java`, `src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java`._
 
+[test: iconLinkOpensInANewTabAndCarriesItsReasonInATitle : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java#L90 ]
+[test: labelledLinkRendersTheWordsBesideTheIcon : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/GoogleCalendarLinkTest.java#L105 ]
+
 ## S6: A missing-travel gap fills in both ends of the ground-transfer form @v1 [proposed]
 
 - Given: a missing-travel gap from Johannesberg to Frankfurt, where each end resolves to exactly one stay: check-out on Sep 13 at 11:00 and check-in at 15:00
@@ -56,6 +68,8 @@ _Source: `src/main/java/dev/ted/jittertravel/web/GoogleCalendarLink.java`, `src/
 - and: the date is 2026-09-13, departure is 11:00 and arrival is 15:00
 
 _Source: `src/main/java/dev/ted/jittertravel/web/GroundTransferPreselection.java`, `src/test/java/dev/ted/jittertravel/web/GroundTransferPreselectionTest.java`._
+
+[test: bothEndsSettledPutTheirTokensAndTheirMomentsOnTheForm : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/GroundTransferPreselectionTest.java#L35 ]
 
 ## S7: An end that cannot be settled is left for the user to choose @v1 [proposed]
 
@@ -67,6 +81,9 @@ _Source: `src/main/java/dev/ted/jittertravel/web/GroundTransferPreselection.java
 
 _Source: `src/main/java/dev/ted/jittertravel/web/GroundTransferPreselection.java`, `src/test/java/dev/ted/jittertravel/web/GroundTransferPreselectionTest.java`._
 
+[test: anUnsettledEndIsLeftForTedToChoose : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/GroundTransferPreselectionTest.java#L54 ]
+[test: aSettledDestinationAloneStillSeedsTheDay : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/GroundTransferPreselectionTest.java#L70 ]
+
 ## S8: A prefilled arrival before the departure is moved to 45 minutes after it @v1 [proposed]
 
 - Given: an origin with check-out at 11:00 and a destination flight departing at 09:00
@@ -74,6 +91,8 @@ _Source: `src/main/java/dev/ted/jittertravel/web/GroundTransferPreselection.java
 - Then: departure is 11:00 and arrival is 11:45
 
 _Source: `src/main/java/dev/ted/jittertravel/web/GroundTransferPreselection.java`, `src/test/java/dev/ted/jittertravel/web/GroundTransferPreselectionTest.java`._
+
+[test: anArrivalThatWouldLandBeforeTheDepartureIsPushedPastIt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/GroundTransferPreselectionTest.java#L86 ]
 
 ## S9: A future free-cancel deadline becomes a feed event with 48h, 24h and 4h alarms @v1 [proposed]
 
@@ -84,6 +103,8 @@ _Source: `src/main/java/dev/ted/jittertravel/web/GroundTransferPreselection.java
 
 _Source: `src/main/java/dev/ted/jittertravel/web/HotelCancelDeadlineSource.java`, `src/test/java/dev/ted/jittertravel/web/HotelCancelDeadlineSourceTest.java`._
 
+[test: futureDeadlineBecomesOneVeventCarrying48h24hAnd4hAlarms : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/HotelCancelDeadlineSourceTest.java#L35 ]
+
 ## S10: Bookings that are cancelled, have no deadline or have a past deadline give no feed event @v1 [proposed]
 
 - Given: a booking with no deadline, a cancelled booking with a future deadline, or a booking whose deadline passed an hour ago
@@ -91,6 +112,10 @@ _Source: `src/main/java/dev/ted/jittertravel/web/HotelCancelDeadlineSource.java`
 - Then: none of them produces an event
 
 _Source: `src/main/java/dev/ted/jittertravel/web/HotelCancelDeadlineSource.java`, `src/test/java/dev/ted/jittertravel/web/HotelCancelDeadlineSourceTest.java`._
+
+[test: bookingWithoutADeadlineProducesNoDeadlineEvent : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/HotelCancelDeadlineSourceTest.java#L49 ]
+[test: cancelledBookingIsExcludedEvenWithAFutureDeadline : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/HotelCancelDeadlineSourceTest.java#L56 ]
+[test: pastDeadlineIsExcluded : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/HotelCancelDeadlineSourceTest.java#L63 ]
 
 ## S11: The list toolbar puts the filters first and a green create link last @v1 [proposed]
 
@@ -101,6 +126,10 @@ _Source: `src/main/java/dev/ted/jittertravel/web/HotelCancelDeadlineSource.java`
 
 _Source: `src/main/java/dev/ted/jittertravel/web/ListToolbar.java`, `src/test/java/dev/ted/jittertravel/web/ListToolbarTest.java`._
 
+[test: filtersComeFirstAndTheCreateLinkLast : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ListToolbarTest.java#L15 ]
+[test: theCreateLinkIsFilledGreenRatherThanOutlinedInTheAccentColour : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ListToolbarTest.java#L58 ]
+[test: theCreateLinkIsHeldAtTheRightEdge : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ListToolbarTest.java#L40 ]
+
 ## S12: The itinerary page shows three days with navigation @v1 [proposed]
 
 - Given: a signed-in viewer opens /itinerary, with or without a date
@@ -109,3 +138,10 @@ _Source: `src/main/java/dev/ted/jittertravel/web/ListToolbar.java`, `src/test/ja
 - and: Previous and Next move by one day, Today is greyed out when today is on screen, and "Next entry" jumps to the first entry after the three days or is greyed out when there is none
 
 _Source: `src/main/java/dev/ted/jittertravel/web/ItineraryController.java`, `src/main/java/dev/ted/jittertravel/web/ItineraryRenderer.java`._
+
+[test: withNoDateTheItineraryStartsOnTodayEvenWhenTodayHasNoEntries : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ItineraryControllerTest.java#L52 ]
+[test: nextEntryLinkSearchesFromTheDayAfterTheThreeOnScreen : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ItineraryControllerTest.java#L62 ]
+[test: itineraryWithDateParamUsesProvidedDate : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ItineraryControllerTest.java#L128 ]
+[test: todayShownAsNonLinkWhenTodayWithinDisplayedRange : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ItineraryRendererTest.java#L86 ]
+[test: nextEntryIsGreyedWithAReasonWhenNothingIsBookedFurtherOut : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ItineraryRendererTest.java#L105 ]
+[test: nextEntryLinksToTheDateItIsGiven : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ItineraryRendererTest.java#L95 ]

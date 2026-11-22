@@ -13,6 +13,8 @@ This part covers the address-parse endpoint, the owner's admin pages, the lists 
 
 _Source: `src/test/java/dev/ted/jittertravel/web/AddressParseControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/AddressParseController.java`._
 
+[test: getWithQueryReturnsParsedAddressAsJson : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AddressParseControllerTest.java#L31 ]
+
 ## S2: An unresolvable address query is refused as unprocessable @v1 [proposed]
 
 - Given: the address service cannot resolve "nowhere"
@@ -20,6 +22,8 @@ _Source: `src/test/java/dev/ted/jittertravel/web/AddressParseControllerTest.java
 - Then: the response status is 422 Unprocessable Entity
 
 _Source: `src/test/java/dev/ted/jittertravel/web/AddressParseControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/AddressParseController.java`._
+
+[test: getWithUnresolvableQueryReturnsUnprocessableEntity : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AddressParseControllerTest.java#L46 ]
 
 ## S3: The backup downloads as a JSON attachment @v1 [proposed]
 
@@ -29,6 +33,8 @@ _Source: `src/test/java/dev/ted/jittertravel/web/AddressParseControllerTest.java
 - and: Content-Disposition is attachment with that filename
 
 _Source: `src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/AdminController.java`._
+
+[test: backupDownloadsJsonAsAnAttachment : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L184 ]
 
 ## S4: The settings page reports whether cookies are marked Secure @v1 [proposed]
 
@@ -41,6 +47,11 @@ _Source: `src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java`, `src
 
 _Source: `src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/AdminController.java`._
 
+[test: settingsReportsAPlainRequestAsNotSecure : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L128 ]
+[test: settingsReportsASecureRequestAsProtected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L143 ]
+[test: settingsCallsTheConsumedForwardedHeaderCorrectRatherThanLeavingItLookingLikeAGap : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L153 ]
+[test: theCookieReadoutIsNoLongerOnTheAdminHomePage : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L168 ]
+
 ## S5: The database page lists row counts per table @v1 [proposed]
 
 - Given: event_log and command_log tables with row counts
@@ -49,6 +60,10 @@ _Source: `src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java`, `src
 - and: right after a truncation, it shows an amber "⚠" warning to "Restart the application before importing"
 
 _Source: `src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/AdminController.java`._
+
+[test: databasePageRendersTableStats : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L90 ]
+[test: truncationRestartWarningIsAmberNotGreen : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L104 ]
+[test: databaseMapsToOkAndRendersTableStats : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L197 ]
 
 ## S6: The legacy event migration previews counts and runs when confirmed @v1 [proposed]
 
@@ -61,6 +76,11 @@ _Source: `src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java`, `src
 
 _Source: `src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/AdminController.java`._
 
+[test: migrateLegacyEventsFormRendersThePreviewCounts : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L210 ]
+[test: migrateLegacyEventsPageLinksBackToTheSiteHomeAndNotJustAdmin : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L226 ]
+[test: migrateLegacyEventsFormWithNothingToRenameOmitsTheOneWayWarning : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L240 ]
+[test: migrateLegacyEventsPostRunsMigrationAndShowsResult : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L251 ]
+
 ## S7: Restore applies a valid backup or shows its errors @v1 [proposed]
 
 - Given: backup content posted to /admin/restore
@@ -70,6 +90,13 @@ _Source: `src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java`, `src
 - and: posting to /admin/restore/validate shows valid command and event counts, or the errors, without restoring
 
 _Source: `src/main/java/dev/ted/jittertravel/web/AdminController.java`._
+
+[test: restoreSuccessRendersSuccessViewWithRestoredCounts : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L434 ]
+[test: restoreSuccessViewReportsSkippedRowsAlreadyPresent : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L466 ]
+[test: restoreWithErrorsRedisplaysFormWithErrors : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L479 ]
+[test: validateOnlyReportsProblemsAndNeverCallsRestore : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L492 ]
+[test: validateOnlyOfACleanFileSaysNothingWasWritten : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L506 ]
+[test: validateOnlyKeepsTheSubmittedContentInTheTextarea : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/AdminControllerTest.java#L520 ]
 
 ## S8: The family-notify probe sends a test email and remembers the result @v1 [proposed]
 
@@ -93,6 +120,13 @@ _Source: `src/main/java/dev/ted/jittertravel/web/AdminController.java`._
 
 _Source: `src/test/java/dev/ted/jittertravel/web/BookedHotelsControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/BookedHotelsController.java`, `src/main/java/dev/ted/jittertravel/web/BookedHotelsRenderer.java`._
 
+[test: canceledStaysAreHiddenByDefaultAndTheSwitchCountsThem : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookedHotelsControllerTest.java#L38 ]
+[test: cancelledShowListsTheCanceledStayAndKeepsTheTimeFilter : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookedHotelsControllerTest.java#L51 ]
+[test: cancelledRowRendersHotelNameAsPlainTextNotALink : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookedHotelsRendererTest.java#L206 ]
+[test: cancelledRowOffersNoEditOrCancelAction : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookedHotelsRendererTest.java#L216 ]
+[test: theCanceledSwitchWhileHiddenCountsWhatItLeavesOutAndLinksToShowingThem : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookedHotelsRendererTest.java#L277 ]
+[test: theCanceledSwitchWhileShownLinksBackToHidingAndTheTimeToggleKeepsIt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookedHotelsRendererTest.java#L288 ]
+
 ## S10: Booked trains default to the future view @v1 [proposed]
 
 - Given: the booked trains page
@@ -102,6 +136,11 @@ _Source: `src/test/java/dev/ted/jittertravel/web/BookedHotelsControllerTest.java
 - and: an empty future list says "No upcoming trains."
 
 _Source: `src/test/java/dev/ted/jittertravel/web/BookedTrainsWebIntegrationTest.java`, `src/main/java/dev/ted/jittertravel/web/BookedTrainsController.java`, `src/main/java/dev/ted/jittertravel/web/BookedTrainsRenderer.java`._
+
+[test: noFilterParamDefaultsToFutureView : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookedTrainsWebIntegrationTest.java#L36 ]
+[test: unknownFilterFallsBackToFutureView : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookedTrainsWebIntegrationTest.java#L56 ]
+[test: filterAllRequestsAllView : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookedTrainsWebIntegrationTest.java#L46 ]
+[test: emptyFutureListRendersNoUpcomingMessage : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookedTrainsRendererTest.java#L30 ]
 
 ## S11: The flight booking form is prefilled from date and city links @v1 [proposed]
 
@@ -114,6 +153,12 @@ _Source: `src/test/java/dev/ted/jittertravel/web/BookedTrainsWebIntegrationTest.
 
 _Source: `src/main/java/dev/ted/jittertravel/web/BookFlightController.java`._
 
+[test: getBookFlightFormWithDateSeedsDepartureOnThatDayAtNineAmAndArrivalThreeHoursLater : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookFlightControllerTest.java#L59 ]
+[test: getBookFlightFormSetsDepartureOneWeekFromNowAtNineAmAndArrivalThreeHoursLater : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookFlightControllerTest.java#L47 ]
+[test: aFixLinksCitiesSeedTheAirportFieldsWhereEachCityHasExactlyOneAirport : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookFlightControllerTest.java#L76 ]
+[test: aCityWithSeveralAirportsLeavesTheFieldBlankRatherThanGuessing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookFlightControllerTest.java#L89 ]
+[test: aCityTheTableDoesNotKnowLeavesTheFieldBlank : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookFlightControllerTest.java#L107 ]
+
 ## S12: A rejected flight booking shows field errors and gets a fresh id @v1 [proposed]
 
 - Given: a submitted flight booking
@@ -123,3 +168,8 @@ _Source: `src/main/java/dev/ted/jittertravel/web/BookFlightController.java`._
 - and: a successful booking redirects to the return page, by default /booked-flights
 
 _Source: `src/main/java/dev/ted/jittertravel/web/BookFlightController.java`._
+
+[test: eachRefusalLandsWhereTheFormShowsIt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookFlightControllerTest.java#L203 ]
+[test: aRefusedFormIsReRenderedUnderAFreshId : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookFlightControllerTest.java#L251 ]
+[test: anOrdinaryBookingStillLandsOnTheFlightsList : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookFlightControllerTest.java#L161 ]
+[test: aRefusedFormComesBackUnderAFreshId : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookFlightWebIntegrationTest.java#L189 ]
