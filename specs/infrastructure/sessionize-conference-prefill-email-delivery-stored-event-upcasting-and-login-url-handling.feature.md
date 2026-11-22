@@ -14,6 +14,9 @@ This part covers several pieces of infrastructure. It turns a pasted Sessionize 
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/SessionizePrefillService.java`, `src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java`._
 
+[test: trackingParametersAndFragmentsAreDroppedRatherThanRefused : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L59 ]
+[test: aNullUrlYieldsNoSlug : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L83 ]
+
 ## S2: A Sessionize page fills the conference fields it actually carries @v1 [proposed]
 
 - Given: the Sessionize page and the calendar (.ics) file for `jfokus-2027`
@@ -25,6 +28,9 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/SessionizePrefillSer
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/SessionizePrefillService.java`, `src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java`._
 
+[test: fillsEveryFieldSessionizeActuallyCarries : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L92 ]
+[test: datesCarryTheGuessedTimesOfDayBecauseThePageStatesNone : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L143 ]
+
 ## S3: A US venue keeps its state as a code, and any other middle part is dropped @v1 [proposed]
 
 - Given: the venue line reads `Centennial, Colorado, United States`
@@ -34,6 +40,9 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/SessionizePrefillSer
 - and: for `Steventon, Oxfordshire, United Kingdom`, venueState is empty and venueCountry is `GB`
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/SessionizePrefillService.java`, `src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java`._
+
+[test: aUsVenueKeepsItsStateAsACode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L115 ]
+[test: aMiddlePartThatIsNotOneOfTheCountrysStatesIsDropped : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L131 ]
 
 ## S4: The CFP deadline is given in the venue's zone, or left blank together with the submission URL @v1 [proposed]
 
@@ -45,6 +54,13 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/SessionizePrefillSer
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/SessionizePrefillService.java`, `src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java`._
 
+[test: theDeadlineIsTheIcsInstantExpressedInTheVenueZone : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L151 ]
+[test: theSubmissionUrlIsThePastedUrlNormalized : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L164 ]
+[test: becauseThePairIsRefusedAtSubmit : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L255 ]
+[test: andAnUnresolvableCityLeavesBothBlankForTheSameReason : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L267 ]
+[test: anIcsWithNoDtstartLeavesTheDeadlineBlank : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L223 ]
+[test: anUnparseableDtstartIsABlankDeadlineRatherThanAnException : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L235 ]
+
 ## S5: Each prefill field degrades to blank on its own @v1 [proposed]
 
 - Given: one of the two documents cannot be read
@@ -54,6 +70,13 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/SessionizePrefillSer
 - and: the SUMMARY inside the reminder alarm is never used as the conference name
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/SessionizePrefillService.java`, `src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java`._
+
+[test: anIcsWithNoDtstartLeavesTheDeadlineBlank : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L223 ]
+[test: aMissingIcsLeavesTheDeadlineBlankAndStillFillsThePageFields : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L243 ]
+[test: theNameFallsBackToTheIcsSummaryWhenThePageIsUnreadable : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L213 ]
+[test: aFoldedSummaryIsUnfoldedRatherThanReadAsATruncatedOne : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L178 ]
+[test: theAlarmsOwnSummaryIsNeverMistakenForTheEventsName : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L194 ]
+[test: aRestyledPageIsAPartialFillNeverAnException : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/SessionizePrefillServiceTest.java#L287 ]
 
 ## S6: An email is posted to Brevo with the API key and the exact message body @v1 [proposed]
 
@@ -67,6 +90,11 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/SessionizePrefillSer
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/BrevoEmailClientTest.java`._
 
+[test: postsTheExactBodyWithTheApiKeyHeader : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/BrevoEmailClientTest.java#L31 ]
+[test: aBlankReplyToOmitsTheObjectEntirelyRatherThanSendingAnEmptyAddress : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/BrevoEmailClientTest.java#L52 ]
+[test: sendToAddressesTheMailToTheGivenAddressAndNeverTheConfiguredRecipient : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/BrevoEmailClientTest.java#L99 ]
+[test: reportsTheRecipientItWillSendTo : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/BrevoEmailClientTest.java#L130 ]
+
 ## S7: An unconfigured or rejected email send fails @v1 [proposed]
 
 - Given: the API key or the recipient is missing or blank
@@ -77,6 +105,10 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/BrevoEmailClientTest
 - and: a non-2xx response from Brevo throws, so the command can be marked failed
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/BrevoEmailClientTest.java`._
+
+[test: anUnconfiguredClientSendsNothingAndSaysSo : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/BrevoEmailClientTest.java#L79 ]
+[test: sendToNeedsAKeyAndAnAddressButNotAConfiguredRecipient : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/BrevoEmailClientTest.java#L118 ]
+[test: aNon2xxThrowsSoTheCommandCanBeMarkedFailed : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/BrevoEmailClientTest.java#L70 ]
 
 ## S8: An email template's first line is the subject and the rest is the body @v1 [proposed]
 
@@ -90,6 +122,13 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/BrevoEmailClientTest
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/EmailTemplatesTest.java`._
 
+[test: theFirstLineIsTheSubjectAndTheRestIsTheBody : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EmailTemplatesTest.java#L17 ]
+[test: anOptionalLinkLineAppearsWhenTheValueIsGiven : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EmailTemplatesTest.java#L32 ]
+[test: anOptionalLinkLineLeavesNoTraceWhenTheValueIsAbsent : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EmailTemplatesTest.java#L43 ]
+[test: neverMoreThanOneBlankLineInARowWhateverTheFileAndTheLoopBetweenThemAdd : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EmailTemplatesTest.java#L53 ]
+[test: aFileWithNoSubjectLineIsRefusedRatherThanSentWithAnEmptySubject : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EmailTemplatesTest.java#L141 ]
+[test: theTripChangedEmailSaysNothingAboutOldFlightsOrChangedJourneysWhenThereAreNone : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EmailTemplatesTest.java#L125 ]
+
 ## S9: A stored event climbs every upcast step above its stored schema version @v1 [proposed]
 
 - Given: a ConferencePlanned payload stored at schema version 2
@@ -100,6 +139,13 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/EmailTemplatesTest.j
 - and: legacy full class names and the retired name `ConferenceTentativelyPlanned` are upcast the same way as the current logical name
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcasterTest.java`, `src/test/java/dev/ted/jittertravel/infrastructure/ConferenceFormatUpcasterTest.java`._
+
+[test: climbsEveryRungAboveTheStoredVersion : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcasterTest.java#L43 ]
+[test: startsFromTheStoredVersionAndSkipsRungsAlreadyPassed : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcasterTest.java#L57 ]
+[test: aRowAlreadyAtTheCurrentVersionDoesNoWork : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcasterTest.java#L72 ]
+[test: nonObjectPayloadIsReturnedUntouched : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcasterTest.java#L90 ]
+[test: everyAddressBearingTypeUpcastsIdenticallyWhetherKeyedByLegacyFqcnOrLogicalName : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcasterTest.java#L214 ]
+[test: injectsTheDefaultFormatWhenAbsentLeavingTheDatetimeAlone : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/ConferenceFormatUpcasterTest.java#L35 ]
 
 ## S10: A broken upcast path fails loudly instead of reading a stale shape @v1 [proposed]
 
@@ -112,6 +158,13 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcaster
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcasterTest.java`, `src/test/java/dev/ted/jittertravel/infrastructure/EventJsonMapperFactoryTest.java`._
 
+[test: aRowFromBeforeZonesWereStoredFailsLoudNowThatTheDatetimeRungsAreRetired : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcasterTest.java#L153 ]
+[test: twoRungsClaimingTheSameStepFailLoud : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcasterTest.java#L112 ]
+[test: anUnknownWireIdFailsLoudRatherThanSilentlySkippingAStoredEvent : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcasterTest.java#L124 ]
+[test: unknownPropertyIsIgnoredRatherThanRejected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventJsonMapperFactoryTest.java#L27 ]
+[test: preRenameStateFieldIsNoLongerReadIntoRegion : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventJsonMapperFactoryTest.java#L39 ]
+[test: aMissingRungFailsLoudRatherThanBindingAStaleShape : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcasterTest.java#L100 ]
+
 ## S11: The event log filter keeps known type names and splits identifiers @v1 [proposed]
 
 - Given: type names and identifier text are submitted to filter the event log
@@ -122,6 +175,13 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/EventPayloadUpcaster
 - and: identifiers are split on spaces, commas, tabs and line breaks, with no blank entries and no duplicates
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/EventLogFilterTest.java`._
+
+[test: nothingSubmittedIsTheEmptyFilter : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventLogFilterTest.java#L12 ]
+[test: registeredTypeNamesAreKeptInTheOrderSubmitted : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventLogFilterTest.java#L23 ]
+[test: aStoredSpellingIsNotATypeNameThePageSpeaks : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventLogFilterTest.java#L43 ]
+[test: aTypeNamedTwiceOrWithStraySpacesIsOneType : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventLogFilterTest.java#L53 ]
+[test: identifiersAreSplitOnSpacesCommasAndLineBreaks : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventLogFilterTest.java#L61 ]
+[test: anIdentifierGivenTwiceIsLookedForOnce : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/EventLogFilterTest.java#L81 ]
 
 ## S12: Login saves the browser zone in a cookie, and a trailing-slash path redirects @v1 [proposed]
 

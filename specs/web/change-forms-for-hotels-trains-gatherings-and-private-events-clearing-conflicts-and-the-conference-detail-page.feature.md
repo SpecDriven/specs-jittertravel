@@ -14,6 +14,9 @@ The owner can reopen a booked hotel, booked train or planned gathering at its ow
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/ChangeHotelController.java`, `src/main/java/dev/ted/jittertravel/web/ChangeHotelRequest.java`._
 
+[test: getWithKnownBookingIdRendersChangeForm : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L66 ]
+[test: theFormPostsBackToThePathAndCarriesNoIdOfItsOwn : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L94 ]
+
 ## S2: An unknown or malformed id on a change page returns silently to its list @v1 [proposed]
 
 - Given: no hotel booking, train trip, gathering or private event has the id in the path, or the id is not a valid UUID
@@ -21,6 +24,10 @@ _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`
 - Then: the owner is redirected to /booked-hotels, /booked-trains, /planned-gatherings or /planned-private-events, with no message
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/ChangeHotelController.java`, `src/main/java/dev/ted/jittertravel/web/ChangeTrainController.java`, `src/main/java/dev/ted/jittertravel/web/ChangeGatheringController.java`, `src/main/java/dev/ted/jittertravel/web/ChangePrivateEventMatchingLocationController.java`._
+
+[test: getOnUnknownBookingIdRedirectsToBookedHotels : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L140 ]
+[test: getForAnUnknownEveningRedirectsToTheListRatherThanErroring : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangePrivateEventMatchingLocationControllerTest.java#L122 ]
+[test: getForAMalformedIdRedirectsToTheListRatherThanErroring : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangePrivateEventMatchingLocationControllerTest.java#L132 ]
 
 ## S3: A saved change applies to the record named in the path and returns to the list @v1 [proposed]
 
@@ -30,6 +37,8 @@ _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`
 - and: the owner is redirected to /booked-hotels
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/ChangeHotelController.java`._
+
+[test: postWithKnownBookingIdRedirectsToBookedHotels : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L149 ]
 
 ## S4: A change started from the calendar or itinerary returns to that day @v1 [proposed]
 
@@ -42,6 +51,9 @@ _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`, `src/test/java/dev/ted/jittertravel/web/ChangeGatheringControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/ChangeGatheringController.java`, `src/main/java/dev/ted/jittertravel/web/ChangeHotelController.java`._
 
+[test: anEditStartedFromTheItineraryCarriesThatDayThroughTheForm : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L107 ]
+[test: aSavedEditStartedFromTheItineraryReturnsToThatDay : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L119 ]
+
 ## S5: A record that disappears before saving is reported on the form @v1 [proposed]
 
 - Given: the hotel booking, train or gathering was removed after its form was opened
@@ -50,6 +62,8 @@ _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`
 - and: the form still posts back to the same path
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/ChangeHotelController.java`, `src/main/java/dev/ted/jittertravel/web/ChangeTrainController.java`, `src/main/java/dev/ted/jittertravel/web/ChangeGatheringController.java`._
+
+[test: postOnUnknownBookingIdReRendersFormWithError : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L174 ]
 
 ## S6: Refused hotel dates and locations are shown under the input that fixes them @v1 [proposed]
 
@@ -61,6 +75,12 @@ _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/ChangeHotelController.java`._
 
+[test: postWithPastCheckInRendersFormAgain : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L203 ]
+[test: postWithInvalidDateRangeRendersFormAgain : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L234 ]
+[test: hotelNamePastedIntoTheCityErrorsOnTheCityField : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L250 ]
+[test: postWithUnparsableDateRendersFormInsteadOfThrowing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L219 ]
+[test: aRefusedCountryAndStateRenderUnderTheirInputs : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java#L341 ]
+
 ## S7: Refused gathering changes are shown on the matching input @v1 [proposed]
 
 - Given: a gathering change is submitted
@@ -69,6 +89,8 @@ _Source: `src/test/java/dev/ted/jittertravel/web/ChangeHotelControllerTest.java`
 - and: a blank or unparsable date or time re-renders the form without trying the change
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ChangeGatheringControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/ChangeGatheringController.java`, `src/main/java/dev/ted/jittertravel/web/ChangeGatheringRequest.java`._
+
+[test: aRefusedVenueLandsOnTheInputThatFixesIt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangeGatheringControllerTest.java#L27 ]
 
 ## S8: Refused train changes, including an overlapping leg, are shown on the times @v1 [proposed]
 
@@ -91,6 +113,13 @@ _Source: `src/main/java/dev/ted/jittertravel/web/ChangeTrainController.java`, `s
 
 _Source: `src/main/java/dev/ted/jittertravel/web/ChangePrivateEventMatchingLocationController.java`, `src/main/java/dev/ted/jittertravel/web/ChangePrivateEventMatchingLocationRequest.java`._
 
+[test: theInputIsPrefilledWithTheLocationAlreadyInForce : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangePrivateEventMatchingLocationControllerTest.java#L80 ]
+[test: postAppliesTheNewMatchingLocationAndReturnsToTheList : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangePrivateEventMatchingLocationControllerTest.java#L139 ]
+[test: aBlankLocationIsReportedUnderTheInputRatherThanRedirecting : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangePrivateEventMatchingLocationControllerTest.java#L164 ]
+[test: theBlankErrorRendersInTheFieldsErrorSpan : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangePrivateEventMatchingLocationControllerTest.java#L185 ]
+[test: anEveningCancelledInAnotherTabRedirectsRatherThanErroring : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangePrivateEventMatchingLocationControllerTest.java#L230 ]
+[test: getRendersTheFormNamingTheEveningBeingRematched : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ChangePrivateEventMatchingLocationControllerTest.java#L62 ]
+
 ## S10: Clearing a city conflict between a gathering and a conference @v1 [proposed]
 
 - Given: the owner opens /clear-conflict with the gathering and conference ids, names, cities and date
@@ -112,6 +141,12 @@ _Source: `src/main/java/dev/ted/jittertravel/web/ClearConflictController.java`, 
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ConferenceDetailControllerTest.java`, `src/main/java/dev/ted/jittertravel/web/ConferenceDetailController.java`, `src/main/java/dev/ted/jittertravel/web/ConferenceDetailRenderer.java`._
 
+[test: rendersTheConferenceAsHtml : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferenceDetailControllerTest.java#L46 ]
+[test: theResponseDeclaresUtf8 : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferenceDetailControllerTest.java#L104 ]
+[test: anUnknownConferenceRedirectsToTheList : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferenceDetailControllerTest.java#L63 ]
+[test: aMalformedIdRedirectsToTheListRatherThanFailing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferenceDetailControllerTest.java#L74 ]
+[test: aFailureBuildingTheViewIsNotDisguisedAsAMissingConference : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferenceDetailControllerTest.java#L88 ]
+
 ## S12: Conference moves offered depend on talk and attendance state @v1 [proposed]
 
 - Given: a conference the owner has declined
@@ -127,3 +162,8 @@ _Source: `src/test/java/dev/ted/jittertravel/web/ConferenceDetailControllerTest.
 - and: no state offers more than three moves, each a link to a page that confirms it
 
 _Source: `src/main/java/dev/ted/jittertravel/web/ConferenceActions.java`._
+
+[test: eachStateOffersExactlyItsLegalMoves : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferenceActionsTest.java#L106 ]
+[test: noStateOffersMoreThanThreeMoves : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferenceActionsTest.java#L149 ]
+[test: onlyADroppedConferenceOffersNoMoveAtAll : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferenceActionsTest.java#L165 ]
+[test: aTalkTheOrganizersHoldCanBeResolvedWhateverTheCommitment : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferenceActionsTest.java#L190 ]

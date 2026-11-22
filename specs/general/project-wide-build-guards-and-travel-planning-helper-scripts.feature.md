@@ -14,6 +14,9 @@ The build enforces a set of project-wide rules and fails with an explanation whe
 
 _Source: `src/test/java/dev/ted/jittertravel/architecture/NoAmbientClockReadsTest.java`, `src/test/java/dev/ted/jittertravel/architecture/ProjectClasses.java`._
 
+[test: productionCodeNeverReadsTheAmbientSystemClock : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/NoAmbientClockReadsTest.java#L72 ]
+[test: readingTheInjectedClockIsAllowed : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/NoAmbientClockReadsTest.java#L93 ]
+
 ## S2: A link whose only affordance is a hover underline is reported @v1 [proposed]
 
 - Given: a style rule where a selector's base rule is `color: inherit` with no underline, and its `:hover` rule adds `text-decoration: underline`
@@ -24,6 +27,12 @@ _Source: `src/test/java/dev/ted/jittertravel/architecture/NoAmbientClockReadsTes
 - and: the scan fails if it reaches 20 or fewer sources or misses `site.css`
 
 _Source: `src/test/java/dev/ted/jittertravel/architecture/HoverIsNeverTheAffordanceTest.java`._
+
+[test: aHoverOnlyUnderlineOnAnInheritedColourIsReported : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/HoverIsNeverTheAffordanceTest.java#L92 ]
+[test: aLinkThatDeclaresItsOwnColourIsFine : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/HoverIsNeverTheAffordanceTest.java#L104 ]
+[test: aPermanentUnderlineIsFineEvenOnAnInheritedColour : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/HoverIsNeverTheAffordanceTest.java#L115 ]
+[test: theScanReachesEveryRendererAndTheStylesheet : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/HoverIsNeverTheAffordanceTest.java#L125 ]
+[test: noControlDependsOnHoverToLookLikeOne : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/HoverIsNeverTheAffordanceTest.java#L70 ]
 
 ## S3: A projector that names another read model is reported @v1 [proposed]
 
@@ -36,6 +45,12 @@ _Source: `src/test/java/dev/ted/jittertravel/architecture/HoverIsNeverTheAfforda
 
 _Source: `src/test/java/dev/ted/jittertravel/architecture/ProjectorsDependOnEventsAloneTest.java`._
 
+[test: aProjectorNamingAnotherReadModelIsReported : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/ProjectorsDependOnEventsAloneTest.java#L71 ]
+[test: aProjectorNamingOnlyItselfIsNotAViolation : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/ProjectorsDependOnEventsAloneTest.java#L87 ]
+[test: theScanReadsCodeAndIgnoresCommentsAndStringLiterals : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/ProjectorsDependOnEventsAloneTest.java#L99 ]
+[test: theScanCoversEveryProjectorInTheApplicationPackage : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/ProjectorsDependOnEventsAloneTest.java#L118 ]
+[test: noProjectorNamesAnotherReadModel : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/ProjectorsDependOnEventsAloneTest.java#L50 ]
+
 ## S4: Every event that carries a location reaches schedule-problem detection @v1 [proposed]
 
 - Given: a domain event record with an address, airport code or train station component
@@ -44,6 +59,9 @@ _Source: `src/test/java/dev/ted/jittertravel/architecture/ProjectorsDependOnEven
 - and: the scan must find at least FlightBooked, TrainBooked, HotelBooked, ConferencePlanned, GatheringPlanned and PrivateEventPlanned
 
 _Source: `src/test/java/dev/ted/jittertravel/architecture/LocatedEventsReachScheduleProblemsTest.java`, `src/test/java/dev/ted/jittertravel/architecture/LocatedEvents.java`._
+
+[test: everyEventCarryingALocationIsHandledByTheProjector : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/LocatedEventsReachScheduleProblemsTest.java#L43 ]
+[test: theScanFindsTheLocatedEventsItIsMeantToCover : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/LocatedEventsReachScheduleProblemsTest.java#L55 ]
 
 ## S5: Every event that carries an address or station reaches the places-used list @v1 [proposed]
 
@@ -55,6 +73,9 @@ _Source: `src/test/java/dev/ted/jittertravel/architecture/LocatedEventsReachSche
 
 _Source: `src/test/java/dev/ted/jittertravel/architecture/LocatedEventsReachPlacesUsedTest.java`, `src/test/java/dev/ted/jittertravel/architecture/LocatedEvents.java`._
 
+[test: everyEventCarryingAnAddressOrAStationIsHandledByTheProjector : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/LocatedEventsReachPlacesUsedTest.java#L29 ]
+[test: theScanFindsTheEventsItIsMeantToCover : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/LocatedEventsReachPlacesUsedTest.java#L37 ]
+
 ## S6: Every projector bean must be registered with the bootstrapper @v1 [proposed]
 
 - Given: a bean in the event-sourcing configuration that consumes the event stream
@@ -64,6 +85,9 @@ _Source: `src/test/java/dev/ted/jittertravel/architecture/LocatedEventsReachPlac
 
 _Source: `src/test/java/dev/ted/jittertravel/architecture/EveryProjectorBeanIsRegisteredTest.java`._
 
+[test: everyBeanThatConsumesTheEventStreamIsRegisteredWithTheBootstrapper : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/EveryProjectorBeanIsRegisteredTest.java#L42 ]
+[test: theGuardIsLookingAtRealProjectorBeans : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/EveryProjectorBeanIsRegisteredTest.java#L59 ]
+
 ## S7: A test that starts a Spring context must be tagged spring @v1 [proposed]
 
 - Given: a test class meta-annotated to extend with the Spring extension
@@ -71,6 +95,8 @@ _Source: `src/test/java/dev/ted/jittertravel/architecture/EveryProjectorBeanIsRe
 - Then: the build fails, naming the class, because mutation testing excludes only the `spring` group
 
 _Source: `src/test/java/dev/ted/jittertravel/architecture/SpringTestsAreTaggedTest.java`, `src/test/java/dev/ted/jittertravel/architecture/ProjectClasses.java`._
+
+[test: everySpringTestIsTaggedSpring : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/SpringTestsAreTaggedTest.java#L42 ]
 
 ## S8: Code may not refer to a project class by its fully qualified name @v1 [proposed]
 
@@ -80,6 +106,8 @@ _Source: `src/test/java/dev/ted/jittertravel/architecture/SpringTestsAreTaggedTe
 - and: package, import, comment and Javadoc lines are skipped, as is a name directly preceded by a quote
 
 _Source: `src/test/java/dev/ted/jittertravel/architecture/NoFullyQualifiedClassReferencesTest.java`._
+
+[test: noFullyQualifiedProjectClassReferencesInCodeBodies : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/architecture/NoFullyQualifiedClassReferencesTest.java#L32 ]
 
 ## S9: Schengen days are counted from entry-to-exit envelopes @v1 [proposed]
 

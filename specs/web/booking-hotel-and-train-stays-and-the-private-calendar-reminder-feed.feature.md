@@ -14,6 +14,9 @@ The book-hotel and book-train forms fill in sensible starting values and accept 
 
 _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java`._
 
+[test: getBookHotelFormSetsCheckInTwoWeeksFromNowAtThreePmAndCheckOutNextMorningAtElevenAm : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java#L45 ]
+[test: getBookHotelFormAssignsDistinctHotelBookingIdOnEachRequest : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java#L116 ]
+
 ## S2: Hotel form opens on the stay a fix link or the calendar day asks for @v1 [proposed]
 
 - Given: a "Book hotel" fix link with city Johannesberg, country DE, checkIn 2026-09-10 and checkOut 2026-09-14
@@ -25,6 +28,9 @@ _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src
 
 _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java`._
 
+[test: getBookHotelFormWithAFixLinksCityCountryAndNightsOpensOnThatStay : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java#L75 ]
+[test: getBookHotelFormWithDateSeedsCheckInOnThatDayAtThreePmAndCheckOutNextMorning : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java#L57 ]
+
 ## S3: Bad or blank hotel prefill values fall back @v1 [proposed]
 
 - Given: a checkOut that is not after the check-in day, or a city and country that are blank
@@ -33,6 +39,9 @@ _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src
 - and: the blank city and country are left empty rather than filled in
 
 _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java`._
+
+[test: aCheckOutThatIsNotAfterCheckInFallsBackToOneNight : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java#L92 ]
+[test: aBlankCityAndCountryAreLeftAloneRatherThanWrittenIn : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java#L104 ]
 
 ## S4: Each hotel booking refusal lands on the input that fixes it @v1 [proposed]
 
@@ -45,6 +54,12 @@ _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src
 
 _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java`._
 
+[test: eachRefusalLandsOnTheInputsThatFixIt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java#L138 ]
+[test: anUnresolvableZoneErrorRendersUnderTheZonePicker : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelWebIntegrationTest.java#L217 ]
+[test: aBlankNameAndABlankCityAreBothReportedInOneResponse : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelWebIntegrationTest.java#L344 ]
+[test: aCancelByAfterCheckInErrorRendersUnderCancelBy : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelWebIntegrationTest.java#L197 ]
+[test: postWithCheckInInPastRendersFormAgain : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelWebIntegrationTest.java#L80 ]
+
 ## S5: A refused booking form comes back under a fresh id @v1 [proposed]
 
 - Given: a hotel or train booking was refused
@@ -55,6 +70,11 @@ _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src
 
 _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src/main/java/dev/ted/jittertravel/web/BookTrainController.java`, `src/main/java/dev/ted/jittertravel/web/BookHotelRequest.java`, `src/main/java/dev/ted/jittertravel/web/BookTrainRequest.java`, `src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java`._
 
+[test: aRefusedFormIsReRenderedUnderAFreshId : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java#L192 ]
+[test: aRefusedFormIsReRenderedUnderAFreshId : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainControllerTest.java#L193 ]
+[test: aRefusedFormComesBackUnderAFreshId : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelWebIntegrationTest.java#L108 ]
+[test: aRefusedFormComesBackUnderAFreshId : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainWebIntegrationTest.java#L124 ]
+
 ## S6: A successful booking returns to where it started @v1 [proposed]
 
 - Given: a valid hotel booking submitted with from=calendar and day=2026-12-03
@@ -63,6 +83,9 @@ _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src
 - and: without from and day it is redirected to /booked-hotels, or to /booked-trains for a train
 
 _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src/main/java/dev/ted/jittertravel/web/BookTrainController.java`, `src/test/java/dev/ted/jittertravel/web/BookHotelControllerTest.java`._
+
+[test: postValidHotelRedirectsToBookedHotels : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookHotelWebIntegrationTest.java#L62 ]
+[test: postValidTrainRedirectsToBookedTrains : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainWebIntegrationTest.java#L77 ]
 
 ## S7: Train form defaults and prefill @v1 [proposed]
 
@@ -73,6 +96,13 @@ _Source: `src/main/java/dev/ted/jittertravel/web/BookHotelController.java`, `src
 - and: fromCity, fromCountry, toCity and toCountry from a fix link prefill the departure and arrival fields, and blank values are ignored
 
 _Source: `src/main/java/dev/ted/jittertravel/web/BookTrainController.java`._
+
+[test: getBookTrainFormSetsDepartureOneWeekFromNowAtNineAm : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainControllerTest.java#L48 ]
+[test: getBookTrainFormWithDateSeedsDepartureOnThatDayAtNineAm : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainControllerTest.java#L60 ]
+[test: getBookTrainFormSetsArrivalSameDayAsDeparture : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainControllerTest.java#L74 ]
+[test: aFixLinksCitiesAndCountriesSeedTheStationFields : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainControllerTest.java#L107 ]
+[test: blankCitiesAndCountriesAreLeftAloneRatherThanWrittenIn : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainControllerTest.java#L122 ]
+[test: getBookTrainFormAssignsDistinctTripIdOnEachRequest : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainControllerTest.java#L86 ]
 
 ## S8: Train booking refusals are reported on the relevant fields @v1 [proposed]
 
@@ -85,6 +115,12 @@ _Source: `src/main/java/dev/ted/jittertravel/web/BookTrainController.java`._
 
 _Source: `src/main/java/dev/ted/jittertravel/web/BookTrainController.java`._
 
+[test: eachRefusalLandsOnTheInputsThatFixIt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainControllerTest.java#L143 ]
+[test: aBlankDepartureRerendersTheFormWithRequiredUnderItAndBooksNothing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainWebIntegrationTest.java#L153 ]
+[test: anOverlappingTripIsRefusedAndNamesTheBlockingLegAsALink : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainWebIntegrationTest.java#L441 ]
+[test: postWithPastDepartureRendersFormAgain : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainWebIntegrationTest.java#L96 ]
+[test: postWithArrivalBeforeDepartureRendersFormAgain : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/BookTrainWebIntegrationTest.java#L182 ]
+
 ## S9: Calendar feed is gated by its token @v1 [proposed]
 
 - Given: a calendar feed token is configured
@@ -93,6 +129,13 @@ _Source: `src/main/java/dev/ted/jittertravel/web/BookTrainController.java`._
 - and: a wrong or missing token, or no configured token at all, gets a 404 with an empty body
 
 _Source: `src/main/java/dev/ted/jittertravel/web/CalendarFeedController.java`._
+
+[test: correctTokenReturns200TextCalendarWithTheVevent : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedControllerTest.java#L54 ]
+[test: wrongTokenReturns404WithEmptyBody : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedControllerTest.java#L69 ]
+[test: probeWithCorrectTokenReturns200WithASingleSyntheticVevent : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedControllerTest.java#L76 ]
+[test: probeWithWrongTokenReturns404 : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedControllerTest.java#L90 ]
+[test: feedRequestWithAnyTokenReturns404WhenDisabled : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedDisabledTest.java#L48 ]
+[test: probeRequestWithAnyTokenReturns404WhenDisabled : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedDisabledTest.java#L55 ]
 
 ## S10: Feed holds every source's deadlines plus a weekly heartbeat @v1 [proposed]
 
@@ -105,6 +148,10 @@ _Source: `src/main/java/dev/ted/jittertravel/web/CalendarFeedController.java`._
 
 _Source: `src/main/java/dev/ted/jittertravel/web/CalendarFeedAssembler.java`, `src/test/java/dev/ted/jittertravel/web/CalendarFeedAssemblerTest.java`._
 
+[test: everySourcesEventsReachTheFeed : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedAssemblerTest.java#L36 ]
+[test: feedAlwaysContainsTheLivenessHeartbeatEvenWithNothingToRemind : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedAssemblerTest.java#L46 ]
+[test: heartbeatIsStrictlyInTheFutureAndAlignedToTheWeeklyCadence : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedAssemblerTest.java#L59 ]
+
 ## S11: Probe event is ten minutes out @v1 [proposed]
 
 - Given: the current instant
@@ -113,6 +160,8 @@ _Source: `src/main/java/dev/ted/jittertravel/web/CalendarFeedAssembler.java`, `s
 - and: the event has a -PT5M alarm
 
 _Source: `src/main/java/dev/ted/jittertravel/web/CalendarFeedAssembler.java`, `src/test/java/dev/ted/jittertravel/web/CalendarFeedAssemblerTest.java`._
+
+[test: probeEventIsTenMinutesOutWithAShortAlarmAndAStableUid : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedAssemblerTest.java#L70 ]
 
 ## S12: Feed links use webcal for subscribing and https for adding the probe @v1 [proposed]
 
@@ -124,3 +173,9 @@ _Source: `src/main/java/dev/ted/jittertravel/web/CalendarFeedAssembler.java`, `s
 - and: an http base URL is also swapped to webcal for subscribing
 
 _Source: `src/main/java/dev/ted/jittertravel/web/CalendarFeedLinks.java`, `src/test/java/dev/ted/jittertravel/web/CalendarFeedLinksTest.java`._
+
+[test: subscribeUrlUsesWebcalSchemeSoItOpensTheIosSubscribeSheet : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedLinksTest.java#L10 ]
+[test: probeAddUrlStaysHttpsForOneOffAddAllImport : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedLinksTest.java#L18 ]
+[test: probeSubscribeUrlUsesWebcalSchemeToTestTheSubscriptionPath : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedLinksTest.java#L26 ]
+[test: trailingSlashOnTheBaseUrlIsNotDoubledIntoThePath : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedLinksTest.java#L34 ]
+[test: httpBaseUrlAlsoSwapsToWebcalForSubscription : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/CalendarFeedLinksTest.java#L42 ]

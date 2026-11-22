@@ -13,6 +13,8 @@ Fills address fields from a Nominatim geocoding answer, using country codes and,
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/AddressParseService.java`._
 
+[test: aUsAddressFillsTheCountryAndStateCodes : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceTest.java#L21 ]
+
 ## S2: A three-letter Australian state code is kept @v1 [proposed]
 
 - Given: Nominatim returns city Sydney, ISO3166-2-lvl4 AU-NSW and country_code au
@@ -20,6 +22,8 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceT
 - Then: the region is NSW
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/AddressParseService.java`._
+
+[test: anAustralianStateCodeOfThreeLettersIsKept : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceTest.java#L36 ]
 
 ## S3: Outside the US, Canada and Australia the region is the state name @v1 [proposed]
 
@@ -29,6 +33,8 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceT
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/AddressParseService.java`._
 
+[test: elsewhereTheRegionIsTheStateNameAsBefore : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceTest.java#L49 ]
+
 ## S4: A missing or mismatched state code leaves the region blank for the form to ask for @v1 [proposed]
 
 - Given: Nominatim returns a US address with state Georgia but no ISO3166-2-lvl4 field, or a Canadian address whose ISO3166-2-lvl4 is US-CO
@@ -37,6 +43,9 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceT
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/AddressParseService.java`._
 
+[test: aUsAddressWithoutAStateCodeLeavesTheStateForTheFormToAskFor : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceTest.java#L64 ]
+[test: aStateCodeFromAnotherCountryIsNotTaken : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceTest.java#L77 ]
+
 ## S5: No country_code leaves the country blank @v1 [proposed]
 
 - Given: Nominatim returns an address with a country name but no country_code
@@ -44,6 +53,8 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceT
 - Then: the country is blank
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/AddressParseService.java`._
+
+[test: noCountryCodeLeavesTheCountryBlank : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceTest.java#L90 ]
 
 ## S6: Map search links use the country name and put any place name first @v1 [proposed]
 
@@ -55,6 +66,10 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressParseServiceT
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressRendererTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/AddressRenderer.java`._
 
+[test: aPickedCountryIsSearchedByItsName : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AddressRendererTest.java#L11 ]
+[test: aPlaceNameLeadsTheSearch : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AddressRendererTest.java#L19 ]
+[test: aStoredNameIsSearchedAsItIs : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AddressRendererTest.java#L29 ]
+
 ## S7: A single-segment flight lookup gives one result with local times @v1 [proposed]
 
 - Given: AeroDataBox returns one segment for UA 195 on United Airlines, from MUC at 2026-06-28 11:45+02:00 to SFO at 2026-06-28 14:20-07:00
@@ -63,6 +78,8 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AddressRendererTest.
 - and: the result has flight number UA195, departure MUC at 2026-06-28 11:45 and arrival SFO at 2026-06-28 14:20, with each time kept as local wall-clock time
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClient.java`._
+
+[test: parsesSampleResponseIntoFlightLookupResult : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java#L58 ]
 
 ## S8: Multi-leg flights keep every leg in departure order and offer the whole trip @v1 [proposed]
 
@@ -73,6 +90,10 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientPar
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClient.java`._
 
+[test: multiSegmentKeepsEveryLegSeparately : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java#L94 ]
+[test: chainingSegmentsAlsoOfferTheWholeTripAsOneOption : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java#L113 ]
+[test: segmentsAreOrderedByDepartureTimeRegardlessOfResponseOrder : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java#L149 ]
+
 ## S9: Unrelated flights sharing a number offer no whole-trip option @v1 [proposed]
 
 - Given: two AA 1 segments where the second leaves from ORD, not DFW, where the first one landed
@@ -81,6 +102,8 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientPar
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClient.java`._
 
+[test: unrelatedFlightsSharingANumberOfferNoWholeTripOption : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java#L127 ]
+
 ## S10: Incomplete segments are dropped without losing the others @v1 [proposed]
 
 - Given: a response where one segment has no departure scheduled time and another is complete
@@ -88,6 +111,8 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientPar
 - Then: only the complete segment, departing DFW, is returned
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClient.java`._
+
+[test: segmentMissingRequiredFieldsIsDroppedWithoutLosingTheOthers : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java#L171 ]
 
 ## S11: Empty, blank or malformed responses and a missing API key give no candidates @v1 [proposed]
 
@@ -98,6 +123,11 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientPar
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClient.java`._
 
+[test: emptyJsonArrayReturnsNoCandidates : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java#L76 ]
+[test: blankResponseReturnsNoCandidates : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java#L83 ]
+[test: malformedResponseReturnsNoCandidates : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java#L89 ]
+[test: lookupWithBlankApiKeyReturnsNoCandidatesWithoutCallingApi : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientParseTest.java#L192 ]
+
 ## S12: The CSRF token is read on every request so its cookie exists before the view renders @v1 [proposed]
 
 - Given: a request that carries a CSRF token
@@ -107,3 +137,7 @@ _Source: `src/test/java/dev/ted/jittertravel/infrastructure/AeroDataBoxClientPar
 - and: a request with no CSRF token passes through untouched
 
 _Source: `src/test/java/dev/ted/jittertravel/infrastructure/CsrfCookieFilterTest.java`, `src/main/java/dev/ted/jittertravel/infrastructure/CsrfCookieFilter.java`._
+
+[test: readsTheTokenSoTheCookieIsWrittenBeforeTheViewStarts : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/CsrfCookieFilterTest.java#L50 ]
+[test: thenLetsTheRequestContinue : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/CsrfCookieFilterTest.java#L62 ]
+[test: aRequestWithNoTokenAttributeIsPassedThroughUntouched : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/CsrfCookieFilterTest.java#L73 ]

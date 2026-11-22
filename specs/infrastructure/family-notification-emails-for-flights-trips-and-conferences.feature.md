@@ -13,6 +13,8 @@ Each newly appended batch of events is read as a whole to decide what family sho
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuator.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java`._
 
+[test: aFlightBookedOnItsOwnNotifiesAsAFlight : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L80 ]
+
 ## S2: A pasted itinerary is told once as a trip, with its legs in departure order @v1 [proposed]
 
 - Given: a batch holding three FlightBooked legs and a FlightItineraryBooked that names them in any order
@@ -22,6 +24,9 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationAc
 - and: no leg is sent as a flight of its own
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuator.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java`._
+
+[test: aPastedItineraryNotifiesOnceForTheWholeTripNotOncePerLeg : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L88 ]
+[test: theLegsOfATripAreOrderedByDepartureWhateverOrderTheItineraryListsThem : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L123 ]
 
 ## S3: An itinerary that names a flight missing from the batch fails on its own @v1 [proposed]
 
@@ -33,6 +38,8 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationAc
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuator.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java`._
 
+[test: anItineraryNamingAFlightNotInTheBatchIsCountedAsAFailureAndStopsNothingElse : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L106 ]
+
 ## S4: A schedule change or rebooking is told as an itinerary change @v1 [proposed]
 
 - Given: a batch holding a FlightItineraryChanged or a FlightItineraryRebooked together with a newly booked leg of that trip
@@ -43,6 +50,11 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationAc
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuator.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java`._
 
+[test: aScheduleChangeIsToldAsAChangeAndItsNewLegIsNotAFlightOfItsOwn : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L139 ]
+[test: aRebookingIsToldAsAChangeAndItsNewLegIsNotAFlightOfItsOwn : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L153 ]
+[test: aFlightDroppedByARebookingIsToldAsTheRebookingNotAsALoneCancellation : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L205 ]
+[test: aFlightDroppedByAScheduleChangeIsToldAsTheChangeNotAsALoneCancellation : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L217 ]
+
 ## S5: Cancelling one flight on its own is told as a cancelled flight @v1 [proposed]
 
 - Given: a batch holding a FlightCancelled and no itinerary event
@@ -51,6 +63,8 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationAc
 - and: no other notification is sent
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuator.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java`._
+
+[test: cancellingOneFlightOnItsOwnAsksForThatFlightWithTheAppendThatCancelledIt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L194 ]
 
 ## S6: Cancelling a whole itinerary is told once with the legs cancelled alongside it @v1 [proposed]
 
@@ -61,6 +75,8 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationAc
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuator.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java`._
 
+[test: cancellingAWholeItineraryTellsFamilyOnceWithTheLegsThatWereCancelledWithIt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L240 ]
+
 ## S7: A failed send is counted and the batch's other notifications still go @v1 [proposed]
 
 - Given: the notification service refuses a change, a cancellation or a flight notification (for example "Brevo returned 502")
@@ -70,6 +86,12 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationAc
 - and: the batch's other notifications are still sent
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuator.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java`._
+
+[test: aChangeThatFailsToSendIsCountedAndTheBatchsOtherNotificationsStillGo : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L166 ]
+[test: aFailureNotifyingALoneCancellationIsCountedAndDoesNotEscape : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L229 ]
+[test: aFailureNotifyingACancellationIsCountedAndDoesNotEscape : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L254 ]
+[test: aFailureOnOneNotificationIsCountedAndDoesNotStopTheNext : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L267 ]
+[test: aFailureAboutAConferenceIsCountedAndDoesNotStopTheNext : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L340 ]
 
 ## S8: Some events send nothing, and only attendance-changing conference events notify @v1 [proposed]
 
@@ -83,6 +105,11 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationAc
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuator.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java`._
 
+[test: aFlightEditedOnItsOwnIsIgnored : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L184 ]
+[test: eachOfTheFiveCommitmentEventsAsksTheServiceAboutItsConference : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L293 ]
+[test: severalEventsForOneConferenceInOneBatchAskOnceAndEachConferenceGetsItsOwnCommandId : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L310 ]
+[test: conferenceEventsThatMoveOnlyTheTalkOrThePlanAreSilent : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationActuatorTest.java#L327 ]
+
 ## S9: A single-flight email names the route, the cities and each time's airport @v1 [proposed]
 
 - Given: a booked flight UA2091 from SFO at 6:10 AM to ORD at 12:45 PM on 18 Oct 2026
@@ -93,6 +120,11 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationAc
 - and: an airport missing from the city table is shown by its code, as in "ZZZ (ZZZ)"
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessages.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java`._
+
+[test: aSingleFlightHasItsRouteInTheSubject : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L36 ]
+[test: aSingleFlightBodyNamesTheCitiesAndLabelsBothZones : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L44 ]
+[test: aCancelledFlightIsTheApprovedText : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L61 ]
+[test: anAirportNotInTheCityTableIsShownByItsCode : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L202 ]
 
 ## S10: A trip email chains the airports and numbers each leg @v1 [proposed]
 
@@ -105,6 +137,12 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMe
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessages.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java`._
 
+[test: aTripSubjectChainsTheAirportsOfEveryLeg : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L77 ]
+[test: aTripSubjectBreaksTheChainWhereALegDoesNotStartWhereTheLastEnded : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L86 ]
+[test: aTripBodyListsEveryLegNumberedAndSeparatedByABlankLine : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L99 ]
+[test: aCancelledTripSaysSoInTheSubjectWithTheSameAirportChain : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L120 ]
+[test: aCancelledTripBodySaysWhatHappenedAndListsEachLegAsNoLongerHappening : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L129 ]
+
 ## S11: Trip emails never name the confirmation code, the airline or a reason @v1 [proposed]
 
 - Given: a trip booked with United Airlines under confirmation code MD7LKB
@@ -112,6 +150,9 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMe
 - Then: neither the subject nor the body contains the confirmation code, the airline, the word "Confirmation", a cancellation reason or "schedule change"
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessages.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java`._
+
+[test: noTripMessageNamesTheConfirmationCodeAnAirlineOrAPassenger : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L210 ]
+[test: aCancelledTripSaysWhatHappenedAndNotWhyAndNamesNoCodeOrAirline : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L148 ]
 
 ## S12: The calendar link opens the calendar at the first departure's local day @v1 [proposed]
 
@@ -124,3 +165,10 @@ _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMe
 - and: the conference "going" email links to the conference's first day and gives the name, the venue, city and country, dates such as "Mon 24 Aug – Thu 27 Aug 2026", the speaking line and the info URL
 
 _Source: `src/main/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessages.java`, `src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java`._
+
+[test: theCalendarLinkJumpsToTheDayOfASingleFlight : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L162 ]
+[test: forATripTheCalendarLinkJumpsToTheDayOfTheFirstFlightWhateverOrderTheyAreGivenIn : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L168 ]
+[test: theDayIsTheDeparturesOwnLocalDateNotTheUtcOne : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L174 ]
+[test: aTrailingSlashOnTheBaseUrlDoesNotDoubleUp : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L184 ]
+[test: withNoBaseUrlThereIsNoLinkRatherThanAGuessedOne : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L193 ]
+[test: theGoingEmailIsTheApprovedText : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/infrastructure/FamilyNotificationMessagesTest.java#L233 ]

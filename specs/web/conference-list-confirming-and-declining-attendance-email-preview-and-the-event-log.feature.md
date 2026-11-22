@@ -14,6 +14,10 @@ The /conferences list shows each conference's name, a day-only date range that l
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java`, `src/main/java/dev/ted/jittertravel/web/ConferencesRenderer.java`._
 
+[test: emptyAllListRendersEmptyStateMessage : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L33 ]
+[test: emptyFutureListRendersNoUpcomingMessage : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L42 ]
+[test: activeFilterMarkedOnToggleLink : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L49 ]
+
 ## S2: The date range is one day-only column that links to the calendar from the week before @v1 [proposed]
 
 - Given: a conference that runs from 1:00 AM on Sun 6/7 to Wed 6/10 in Europe/Amsterdam
@@ -23,6 +27,11 @@ _Source: `src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java`, 
 - and: the range links to /calendar?day=2026-06-07#w-2026-05-31, using the day in the conference's own time zone and the Sunday of the week before
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java`, `src/main/java/dev/ted/jittertravel/web/ConferencesRenderer.java`._
+
+[test: theDateRangeIsOneColumnOfTwoNowrapDays : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L74 ]
+[test: theDateRangeLinksToTheCalendarScrolledToTheWeekBefore : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L91 ]
+[test: theDateRangeCarriesNoTimeOfDayAtAll : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L119 ]
+[test: aMidWeekConferenceLinksToTheSundayOfTheWeekBefore : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L102 ]
 
 ## S3: City, country and venue share one cell @v1 [proposed]
 
@@ -34,6 +43,12 @@ _Source: `src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java`, 
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java`, `src/main/java/dev/ted/jittertravel/web/ConferencesRenderer.java`._
 
+[test: cityAndCountryShareOneCell : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L135 ]
+[test: aConferenceWithNoCountryShowsTheCityAlone : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L178 ]
+[test: aConferenceWithNoVenueRecordedShowsNoVenueLine : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L166 ]
+[test: theVenueRendersUnderTheCity : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L151 ]
+[test: conferenceNameCityAndCountryAreRendered : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L58 ]
+
 ## S4: A watched conference with a CFP offers Submitted, Ticket Bought and Decline @v1 [proposed]
 
 - Given: a conference Ted is only watching, with a call for papers and nothing submitted
@@ -42,6 +57,9 @@ _Source: `src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java`, 
 - and: its actions link to /conferences/{id}/talk?outcome=SUBMITTED ("Submitted"), to /conferences/{id}/confirm?basis=TICKET_PURCHASED ("Ticket Bought") and to /conferences/{id}/decline ("Decline")
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java`, `src/main/java/dev/ted/jittertravel/web/ConferencesRenderer.java`._
+
+[test: aWatchedConferenceWithACfpOffersSubmittedTicketBoughtAndDecline : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L257 ]
+[test: eachConferenceRowHasADeclineLinkToItsDeclinePage : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java#L240 ]
 
 ## S5: The confirm page opens with the given basis already chosen @v1 [proposed]
 
@@ -52,6 +70,10 @@ _Source: `src/test/java/dev/ted/jittertravel/web/ConferencesRendererTest.java`, 
 
 _Source: `src/main/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceController.java`._
 
+[test: aBasisInTheQueryStringArrivesPreselected : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceControllerTest.java#L90 ]
+[test: anUnrecognisedBasisLeavesThePageAsking : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceControllerTest.java#L102 ]
+[test: getRendersConfirmPageForKnownConference : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceControllerTest.java#L73 ]
+
 ## S6: Confirming without a basis shows an error on the confirm page @v1 [proposed]
 
 - Given: a conference that exists
@@ -60,6 +82,9 @@ _Source: `src/main/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceCont
 - and: no confirmation is recorded
 
 _Source: `src/main/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceController.java`._
+
+[test: missingBasisRendersTheErrorOnTheConfirmPageItself : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceControllerTest.java#L161 ]
+[test: unrecognizedBasisRendersTheErrorRatherThanFailing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceControllerTest.java#L178 ]
 
 ## S7: Confirming or declining records the decision and returns to the list @v1 [proposed]
 
@@ -70,6 +95,12 @@ _Source: `src/main/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceCont
 
 _Source: `src/main/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceController.java`, `src/main/java/dev/ted/jittertravel/web/DeclineConferenceController.java`, `src/main/java/dev/ted/jittertravel/web/DeclineConferenceRequest.java`._
 
+[test: confirmingRedirectsBackToTheList : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceControllerTest.java#L135 ]
+[test: requestCarriesThePathIdAndTheChosenBasis : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceControllerTest.java#L145 ]
+[test: decliningRedirectsBackToTheList : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/DeclineConferenceControllerTest.java#L86 ]
+[test: requestCarriesThePathIdAndTheReason : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/DeclineConferenceControllerTest.java#L95 ]
+[test: omittedReasonBecomesEmptyRatherThanNull : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/DeclineConferenceControllerTest.java#L111 ]
+
 ## S8: Stale or malformed conference links fall back quietly to the list, and read-only mode blocks the change @v1 [proposed]
 
 - Given: a conference id that is malformed or names a conference that no longer exists
@@ -78,6 +109,13 @@ _Source: `src/main/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceCont
 - and: when the app is in read-only mode, submitting redirects to /read-only
 
 _Source: `src/main/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceController.java`, `src/main/java/dev/ted/jittertravel/web/DeclineConferenceController.java`._
+
+[test: getOnUnknownConferenceRedirectsToList : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceControllerTest.java#L126 ]
+[test: alreadyGoneConferenceRedirectsToListInsteadOfThrowing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceControllerTest.java#L193 ]
+[test: malformedConferenceIdRedirectsInsteadOfThrowing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceControllerTest.java#L205 ]
+[test: getOnUnknownConferenceRedirectsToList : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/DeclineConferenceControllerTest.java#L77 ]
+[test: alreadyGoneConferenceRedirectsToListInsteadOfThrowing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/DeclineConferenceControllerTest.java#L123 ]
+[test: malformedConferenceIdRedirectsInsteadOfThrowing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/DeclineConferenceControllerTest.java#L134 ]
 
 ## S9: The email preview sends a group only to Ted's own address and reports how far it got @v1 [proposed]
 
@@ -90,6 +128,13 @@ _Source: `src/main/java/dev/ted/jittertravel/web/ConfirmConferenceAttendanceCont
 
 _Source: `src/main/java/dev/ted/jittertravel/web/EmailPreviewController.java`, `src/main/java/dev/ted/jittertravel/web/EmailPreviewPanels.java`, `src/main/java/dev/ted/jittertravel/web/EmailPreviewMemory.java`, `src/main/java/dev/ted/jittertravel/web/EmailGroup.java`._
 
+[test: sendingGoesToTedAndOnlyToTedNeverToTheFamilyAddress : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EmailPreviewControllerTest.java#L233 ]
+[test: aSuccessIsRememberedAndTheNextPageFlashesIt : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EmailPreviewControllerTest.java#L263 ]
+[test: aFailureAfterTheFirstEmailIsRememberedWithHowFarItGotAndShownAmberOnThePage : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EmailPreviewControllerTest.java#L275 ]
+[test: sendingTheConferenceEmailsGoesToTedOnlyInTheOrderTheCardsShowThem : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EmailPreviewControllerTest.java#L339 ]
+[test: aConferenceFailureAfterTwoIsRememberedAsTwoOfFourAndTheConferencePanelGoesAmber : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EmailPreviewControllerTest.java#L366 ]
+[test: theFlightResultStaysOnThePageWhileTheConferencePanelIsStillReady : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EmailPreviewControllerTest.java#L309 ]
+
 ## S10: The email preview cannot send without a key or a reply-to address @v1 [proposed]
 
 - Given: JITTERTRAVEL_BREVO_API_KEY is missing, or TED_REPLY_EMAIL is blank
@@ -98,6 +143,12 @@ _Source: `src/main/java/dev/ted/jittertravel/web/EmailPreviewController.java`, `
 - and: no remembered result is shown, and the previews still render
 
 _Source: `src/main/java/dev/ted/jittertravel/web/EmailPreviewPanels.java`, `src/main/java/dev/ted/jittertravel/web/EmailPreviewController.java`._
+
+[test: withNoReplyToThereIsNoAddressOfYoursAndNoButton : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EmailPreviewPanelsTest.java#L127 ]
+[test: withNoBrevoKeyNothingCanBeSentAndTheKeyIsNamed : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EmailPreviewPanelsTest.java#L141 ]
+[test: withNoReplyToThePanelSaysSoOffersNoButtonAndTheEmailsStillShow : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EmailPreviewControllerTest.java#L207 ]
+[test: aRememberedResultIsNotShownWhenSendingIsNoLongerPossible : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EmailPreviewPanelsTest.java#L173 ]
+[test: theKeyIsReportedBeforeTheAddressWhenBothAreMissing : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EmailPreviewPanelsTest.java#L154 ]
 
 ## S11: The event log pages through filtered events and marks matched identifiers @v1 [proposed]
 
@@ -110,6 +161,13 @@ _Source: `src/main/java/dev/ted/jittertravel/web/EmailPreviewPanels.java`, `src/
 
 _Source: `src/main/java/dev/ted/jittertravel/web/EventLogController.java`, `src/main/java/dev/ted/jittertravel/web/EventLogFilterView.java`._
 
+[test: thePagesAreCountedFromTheMatchingRowsNotFromTheWholeLog : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EventLogControllerTest.java#L161 ]
+[test: thePagingLinksCarryTheFilter : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EventLogControllerTest.java#L145 ]
+[test: theSummaryCountsWhatWasChosenInSingularAndPlural : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EventLogFilterViewTest.java#L63 ]
+[test: whereOneIdentifierBeginsAnotherTheLongerOneIsMatchedWhole : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EventLogFilterViewTest.java#L131 ]
+[test: aPagingLinkCarriesEveryTypeAndTheIdentifiers : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EventLogFilterViewTest.java#L75 ]
+[test: aMatchedIdentifierIsMarkedInThePayloadAndThePayloadIsStillEscaped : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/EventLogControllerTest.java#L187 ]
+
 ## S12: Context bands on the problem calendar name the thing and its exact dates @v1 [proposed]
 
 - Given: a conference, gathering, hotel stay or trip on the schedule
@@ -119,3 +177,10 @@ _Source: `src/main/java/dev/ted/jittertravel/web/EventLogController.java`, `src/
 - and: a range that crosses a month reads "Sep 30 – Oct 2", and a single day appears once
 
 _Source: `src/test/java/dev/ted/jittertravel/web/ContextBandTest.java`, `src/main/java/dev/ted/jittertravel/web/ContextBand.java`._
+
+[test: conferenceLabelNamesItItsCityAndItsExactDates : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ContextBandTest.java#L13 ]
+[test: stayLabelNamesTheHotelAndItsCity : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ContextBandTest.java#L44 ]
+[test: travelLabelNamesBothEnds : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ContextBandTest.java#L31 ]
+[test: aRangeCrossingAMonthNamesBothMonths : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ContextBandTest.java#L52 ]
+[test: aSingleDaySaysThatDayOnce : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ContextBandTest.java#L60 ]
+[test: gatheringLabelReadsTheSameWayAsAConference : https://github.com/jitterted/jittertravel/blob/main/src/test/java/dev/ted/jittertravel/web/ContextBandTest.java#L23 ]
